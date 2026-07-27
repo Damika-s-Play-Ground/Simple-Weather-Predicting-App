@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Simple-Weather-Predicting-App/static/css/main.e16c1b22.css",
-    "main.js": "/Simple-Weather-Predicting-App/static/js/main.506cec97.js",
+    "main.css": "/Simple-Weather-Predicting-App/static/css/main.c31f9837.css",
+    "main.js": "/Simple-Weather-Predicting-App/static/js/main.2be949c6.js",
     "static/js/787.e3670615.chunk.js": "/Simple-Weather-Predicting-App/static/js/787.e3670615.chunk.js",
     "index.html": "/Simple-Weather-Predicting-App/index.html",
-    "main.e16c1b22.css.map": "/Simple-Weather-Predicting-App/static/css/main.e16c1b22.css.map",
-    "main.506cec97.js.map": "/Simple-Weather-Predicting-App/static/js/main.506cec97.js.map",
+    "main.c31f9837.css.map": "/Simple-Weather-Predicting-App/static/css/main.c31f9837.css.map",
+    "main.2be949c6.js.map": "/Simple-Weather-Predicting-App/static/js/main.2be949c6.js.map",
     "787.e3670615.chunk.js.map": "/Simple-Weather-Predicting-App/static/js/787.e3670615.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e16c1b22.css",
-    "static/js/main.506cec97.js"
+    "static/css/main.c31f9837.css",
+    "static/js/main.2be949c6.js"
   ]
 }
