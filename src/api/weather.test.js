@@ -1,0 +1,47 @@
+// axios ships ESM that CRA's Jest cannot transform; mock it so importing the
+// module under test doesn't pull in the real package.
+jest.mock("axios", () => ({ get: jest.fn() }));
+
+import { buildDailyForecast } from "./weather";
+
+const entry = (dt_txt, temp_min, temp_max, icon, description) => ({
+  dt_txt,
+  main: { temp_min, temp_max },
+  weather: [{ icon, description }],
+});
+
+describe("buildDailyForecast", () => {
+  it("returns an empty array when given a non-array", () => {
+    expect(buildDailyForecast(undefined)).toEqual([]);
+    expect(buildDailyForecast(null)).toEqual([]);
+    expect(buildDailyForecast({})).toEqual([]);
+  });
+
+  it("aggregates min/max per day and prefers the midday icon", () => {
+    const list = [
+      entry("2026-07-28 09:00:00", 10, 15, "01d", "clear sky"),
+      entry("2026-07-28 12:00:00", 12, 20, "02d", "few clouds"),
+      entry("2026-07-28 15:00:00", 8, 22, "03d", "scattered clouds"),
+      entry("2026-07-29 12:00:00", 5, 9, "10d", "light rain"),
+    ];
+
+    const days = buildDailyForecast(list);
+
+    expect(days).toHaveLength(2);
+    expect(days[0]).toMatchObject({
+      date: "2026-07-28",
+      min: 8,
+      max: 22,
+      icon: "02d", // from the 12:00 entry
+      description: "few clouds",
+    });
+    expect(days[1]).toMatchObject({ date: "2026-07-29", min: 5, max: 9 });
+  });
+
+  it("caps the result at 5 days", () => {
+    const list = Array.from({ length: 8 }, (_, i) =>
+      entry(`2026-08-0${i + 1} 12:00:00`, i, i + 5, "01d", "clear sky")
+    );
+    expect(buildDailyForecast(list)).toHaveLength(5);
+  });
+});

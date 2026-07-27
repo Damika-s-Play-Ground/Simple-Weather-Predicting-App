@@ -1,0 +1,62 @@
+import {
+  getWeatherBackground,
+  temperatureToPercent,
+  displayTemperature,
+  dayName,
+} from "./format";
+
+describe("getWeatherBackground", () => {
+  it("maps plain conditions to their background class", () => {
+    expect(getWeatherBackground("clear sky")).toBe("clear-sky");
+    expect(getWeatherBackground("broken clouds")).toBe("cloudy-sky");
+    expect(getWeatherBackground("light rain")).toBe("rainy-sky");
+    expect(getWeatherBackground("fog")).toBe("misty-sky");
+  });
+
+  it("prefers the specific condition when a description also contains 'rain'", () => {
+    expect(getWeatherBackground("thunderstorm with rain")).toBe(
+      "thunderstorm-sky"
+    );
+    expect(getWeatherBackground("rain and snow")).toBe("snowy-sky");
+    expect(getWeatherBackground("drizzle rain")).toBe("drizzle-sky");
+  });
+
+  it("falls back to default-sky for unknown or missing descriptions", () => {
+    expect(getWeatherBackground("tornado")).toBe("default-sky");
+    expect(getWeatherBackground("")).toBe("default-sky");
+    expect(getWeatherBackground()).toBe("default-sky");
+  });
+});
+
+describe("temperatureToPercent", () => {
+  it("maps the midpoint of the -30..50 range to 0.5", () => {
+    expect(temperatureToPercent(10)).toBeCloseTo(0.5);
+  });
+
+  it("clamps values outside the range to [0, 1]", () => {
+    expect(temperatureToPercent(-100)).toBe(0);
+    expect(temperatureToPercent(100)).toBe(1);
+    expect(temperatureToPercent(-30)).toBe(0);
+    expect(temperatureToPercent(50)).toBe(1);
+  });
+});
+
+describe("displayTemperature", () => {
+  it("rounds Celsius unchanged", () => {
+    expect(displayTemperature(20.4, "C")).toBe(20);
+    expect(displayTemperature(20.5, "C")).toBe(21);
+  });
+
+  it("converts Celsius to Fahrenheit and rounds", () => {
+    expect(displayTemperature(0, "F")).toBe(32);
+    expect(displayTemperature(100, "F")).toBe(212);
+    expect(displayTemperature(37, "F")).toBe(99); // 98.6 -> 99
+  });
+});
+
+describe("dayName", () => {
+  it("returns the short weekday for a YYYY-MM-DD date", () => {
+    expect(dayName("2026-07-28")).toBe("Tue");
+    expect(dayName("2026-01-01")).toBe("Thu");
+  });
+});

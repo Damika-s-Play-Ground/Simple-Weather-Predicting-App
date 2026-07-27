@@ -39,7 +39,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 Added after the seed backlog was completed — re-audit of remaining worthwhile work.
 
 - [x] Guard against out-of-order/stale responses so a slow earlier search can't overwrite a newer one. _useWeather now tags each request with a monotonic id (useRef) and ignores results from any superseded request; added a test that resolves an older request after a newer one and asserts the newer city stays._
-- [ ] Unit-test the pure helpers (buildDailyForecast, getWeatherBackground, displayTemperature, dayName).
+- [x] Unit-test the pure helpers (buildDailyForecast, getWeatherBackground, displayTemperature, dayName). _Added src/utils/format.test.js and src/api/weather.test.js: 11 focused unit tests covering background precedence, temp clamping/conversion, weekday formatting, and forecast aggregation/cap (16 tests total across the suite)._
 - [ ] Show "feels like" temperature and sunrise/sunset in the weather card.
 - [ ] Persist the user's unit (°C/°F) preference in localStorage.
 - [ ] Add a "Clear" control for recent searches.
