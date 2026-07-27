@@ -4,6 +4,7 @@ import useWeather from "./hooks/useWeather";
 import { getWeatherBackground } from "./utils/format";
 import SearchForm from "./components/SearchForm";
 import WeatherCard from "./components/WeatherCard";
+import WeatherSkeleton from "./components/WeatherSkeleton";
 import Footer from "./components/Footer";
 
 function App() {
@@ -35,7 +36,10 @@ function App() {
         )}
 
         {loading && !error && (
-          <p className="status-message">Loading weather…</p>
+          <>
+            <span className="sr-only">Loading weather…</span>
+            <WeatherSkeleton />
+          </>
         )}
 
         {!loading && !error && !current && (
