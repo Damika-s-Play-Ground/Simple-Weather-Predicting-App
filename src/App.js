@@ -16,6 +16,7 @@ function App() {
     recentSearches,
     searchCity,
     useMyLocation,
+    clearRecentSearches,
   } = useWeather("London");
   const [unit, setUnit] = useState(() => {
     try {
@@ -42,6 +43,7 @@ function App() {
         onSearch={searchCity}
         onUseLocation={useMyLocation}
         recentSearches={recentSearches}
+        onClearRecent={clearRecentSearches}
       />
       <section className="weather-section" aria-live="polite">
         {error && (

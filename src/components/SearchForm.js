@@ -3,6 +3,7 @@ export default function SearchForm({
   onSearch,
   onUseLocation,
   recentSearches,
+  onClearRecent,
 }) {
   return (
     <section className="form-section">
@@ -41,6 +42,14 @@ export default function SearchForm({
               {city}
             </button>
           ))}
+          <button
+            type="button"
+            className="recent-clear"
+            aria-label="Clear recent searches"
+            onClick={onClearRecent}
+          >
+            Clear
+          </button>
         </div>
       )}
     </section>

@@ -190,6 +190,19 @@ form {
   background-color: #fff;
 }
 
+.recent-clear {
+  padding: 4px 10px;
+  font-size: 13px;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+}
+
+.recent-clear:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 /* Use-my-location button */
 .location-button {
   background-color: #5a6b7b;

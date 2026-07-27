@@ -38,6 +38,15 @@ export default function useWeather(defaultCity = "London") {
     });
   };
 
+  const clearRecentSearches = () => {
+    setRecentSearches([]);
+    try {
+      localStorage.removeItem("recentSearches");
+    } catch {
+      // Ignore storage errors (e.g. private mode / quota).
+    }
+  };
+
   // Shared request/response handling for both city and coordinate lookups.
   const loadByQuery = async (query, notFoundMessage) => {
     const requestId = ++latestRequestId.current;
@@ -112,5 +121,6 @@ export default function useWeather(defaultCity = "London") {
     recentSearches,
     searchCity,
     useMyLocation,
+    clearRecentSearches,
   };
 }

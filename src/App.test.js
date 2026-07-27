@@ -95,6 +95,23 @@ test("restores the saved unit preference from localStorage", async () => {
   expect(await screen.findByText(/London, GB - 68°F/)).toBeInTheDocument();
 });
 
+test("clears recent searches when Clear is clicked", async () => {
+  render(<App />);
+  // The default London fetch records a recent-search chip.
+  expect(
+    await screen.findByRole("button", { name: /show weather for london/i })
+  ).toBeInTheDocument();
+
+  await userEvent.click(
+    screen.getByRole("button", { name: /clear recent searches/i })
+  );
+
+  expect(
+    screen.queryByRole("button", { name: /show weather for london/i })
+  ).not.toBeInTheDocument();
+  expect(localStorage.getItem("recentSearches")).toBeNull();
+});
+
 test("ignores a stale response that resolves after a newer search", async () => {
   // Defer each city's weather response so we control resolution order.
   const resolvers = {};
