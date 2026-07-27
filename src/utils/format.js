@@ -36,6 +36,16 @@ export const displayTemperature = (tempInCelsius, unit) => {
   return Math.round(value);
 };
 
+// Wind speed follows the unit system: m/s for metric (°C), mph for imperial
+// (°F). The API returns metres per second; round to one decimal.
+export const displayWindSpeed = (mps, unit) => {
+  const value = unit === "C" ? mps : mps * 2.23694;
+  return Math.round(value * 10) / 10;
+};
+
+// Label matching displayWindSpeed's unit.
+export const windUnitLabel = (unit) => (unit === "C" ? "m/s" : "mph");
+
 // Short weekday label (e.g. "Mon") for a YYYY-MM-DD forecast date.
 export const dayName = (dateStr) =>
   new Date(`${dateStr}T12:00:00`).toLocaleDateString(undefined, {

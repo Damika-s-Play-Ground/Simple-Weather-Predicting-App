@@ -104,6 +104,8 @@ test("restores the saved unit preference from localStorage", async () => {
 
   // 20°C -> 68°F, so the saved preference should show Fahrenheit on load.
   expect(await screen.findByText(/London, GB - 68°F/)).toBeInTheDocument();
+  // Imperial units also switch wind to mph (3 m/s -> 6.7 mph).
+  expect(screen.getByText(/Wind Speed: 6.7 mph/)).toBeInTheDocument();
 });
 
 test("clears recent searches when Clear is clicked", async () => {

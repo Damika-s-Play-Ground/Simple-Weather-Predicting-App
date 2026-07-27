@@ -1,6 +1,8 @@
 import Gauge from "./Gauge";
 import {
   displayTemperature,
+  displayWindSpeed,
+  windUnitLabel,
   temperatureToPercent,
   dayName,
   formatTime,
@@ -55,7 +57,10 @@ export default function WeatherCard({
           Feels Like: {displayTemperature(data.feelsLike, unit)}°{unit}
         </p>
       )}
-      <p>Wind Speed: {data.windSpeed} m/s</p>
+      <p>
+        Wind Speed: {displayWindSpeed(data.windSpeed, unit)}{" "}
+        {windUnitLabel(unit)}
+      </p>
       <p>Humidity: {data.humidity}%</p>
       {data.sunrise != null && data.sunset != null && (
         <p>

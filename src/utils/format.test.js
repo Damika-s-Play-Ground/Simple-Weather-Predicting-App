@@ -2,6 +2,8 @@ import {
   getWeatherBackground,
   temperatureToPercent,
   displayTemperature,
+  displayWindSpeed,
+  windUnitLabel,
   dayName,
   formatTime,
   formatClock,
@@ -53,6 +55,23 @@ describe("displayTemperature", () => {
     expect(displayTemperature(0, "F")).toBe(32);
     expect(displayTemperature(100, "F")).toBe(212);
     expect(displayTemperature(37, "F")).toBe(99); // 98.6 -> 99
+  });
+});
+
+describe("displayWindSpeed", () => {
+  it("keeps m/s for metric and rounds to one decimal", () => {
+    expect(displayWindSpeed(3, "C")).toBe(3);
+    expect(displayWindSpeed(2.68, "C")).toBe(2.7);
+  });
+
+  it("converts m/s to mph for imperial", () => {
+    expect(displayWindSpeed(10, "F")).toBe(22.4); // 10 * 2.23694
+    expect(displayWindSpeed(0, "F")).toBe(0);
+  });
+
+  it("labels the unit to match", () => {
+    expect(windUnitLabel("C")).toBe("m/s");
+    expect(windUnitLabel("F")).toBe("mph");
   });
 });
 
