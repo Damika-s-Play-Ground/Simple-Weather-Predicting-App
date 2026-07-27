@@ -23,7 +23,7 @@ function App() {
     try {
       const API_KEY = process.env.REACT_APP_OWM_KEY;
       const result = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
       );
       setAllData({
         city: result.data.name,
@@ -57,8 +57,7 @@ function App() {
   };
 
   const { backgroundClass } = getWeatherStyle();
-  const temperatureToPercent = (tempInKelvin) => {
-    const tempInCelsius = tempInKelvin - 273.15;
+  const temperatureToPercent = (tempInCelsius) => {
     const minTemp = -30;
     const maxTemp = 50;
     const percent = (tempInCelsius - minTemp) / (maxTemp - minTemp);
@@ -90,7 +89,7 @@ function App() {
           />
         )}
         <h3>
-          {allData.city}, {allData.country} - {Math.round(allData.temperature - 273.15)}°C
+          {allData.city}, {allData.country} - {Math.round(allData.temperature)}°C
         </h3>
         <div id="outer-div">
           <GaugeChart
