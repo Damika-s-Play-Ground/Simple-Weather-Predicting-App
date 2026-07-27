@@ -41,3 +41,14 @@ export const dayName = (dateStr) =>
   new Date(`${dateStr}T12:00:00`).toLocaleDateString(undefined, {
     weekday: "short",
   });
+
+// Format a UTC unix timestamp (seconds) as a local wall-clock time for the
+// queried location, applying its UTC offset. Rendered in UTC so the viewer's
+// own timezone doesn't shift the result.
+export const formatTime = (unixSeconds, tzOffsetSeconds = 0) => {
+  if (unixSeconds == null) return "";
+  return new Date((unixSeconds + tzOffsetSeconds) * 1000).toLocaleTimeString(
+    undefined,
+    { hour: "2-digit", minute: "2-digit", timeZone: "UTC" }
+  );
+};

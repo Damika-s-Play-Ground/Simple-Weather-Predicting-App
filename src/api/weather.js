@@ -7,10 +7,14 @@ const buildCurrent = (data) => ({
   city: data.name,
   country: data.sys.country,
   temperature: data.main.temp,
+  feelsLike: data.main.feels_like,
   weatherDescription: data.weather[0].description,
   windSpeed: data.wind.speed,
   humidity: data.main.humidity,
   icon: data.weather[0].icon,
+  sunrise: data.sys.sunrise,
+  sunset: data.sys.sunset,
+  timezone: data.timezone, // seconds offset from UTC for the queried location
 });
 
 // Collapse the API's 3-hourly forecast list into up to 5 daily min/max entries,

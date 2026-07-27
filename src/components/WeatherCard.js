@@ -3,6 +3,7 @@ import {
   displayTemperature,
   temperatureToPercent,
   dayName,
+  formatTime,
 } from "../utils/format";
 
 // Current conditions, the °C/°F toggle, the gauge, and the 5-day forecast.
@@ -40,8 +41,19 @@ export default function WeatherCard({ data, forecast, unit, onUnitChange }) {
       </div>
       <Gauge percent={temperatureToPercent(data.temperature)} />
       <p>Weather: {data.weatherDescription}</p>
+      {data.feelsLike != null && (
+        <p>
+          Feels Like: {displayTemperature(data.feelsLike, unit)}°{unit}
+        </p>
+      )}
       <p>Wind Speed: {data.windSpeed} m/s</p>
       <p>Humidity: {data.humidity}%</p>
+      {data.sunrise != null && data.sunset != null && (
+        <p>
+          Sunrise: {formatTime(data.sunrise, data.timezone)} · Sunset:{" "}
+          {formatTime(data.sunset, data.timezone)}
+        </p>
+      )}
 
       {forecast.length > 0 && (
         <div className="forecast">

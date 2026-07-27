@@ -3,6 +3,7 @@ import {
   temperatureToPercent,
   displayTemperature,
   dayName,
+  formatTime,
 } from "./format";
 
 describe("getWeatherBackground", () => {
@@ -58,5 +59,18 @@ describe("dayName", () => {
   it("returns the short weekday for a YYYY-MM-DD date", () => {
     expect(dayName("2026-07-28")).toBe("Tue");
     expect(dayName("2026-01-01")).toBe("Thu");
+  });
+});
+
+describe("formatTime", () => {
+  it("formats a UTC timestamp with the location's offset applied", () => {
+    // 06:00 UTC; with no offset it stays 06:00, +1h offset makes it 07:00.
+    expect(formatTime(21600, 0)).toMatch(/06:00/);
+    expect(formatTime(21600, 3600)).toMatch(/07:00/);
+  });
+
+  it("returns an empty string when the timestamp is missing", () => {
+    expect(formatTime(undefined)).toBe("");
+    expect(formatTime(null)).toBe("");
   });
 });

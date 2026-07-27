@@ -16,10 +16,11 @@ jest.mock("react-gauge-chart", () => () => <div data-testid="gauge" />);
 const weatherResponse = (name, country) => ({
   data: {
     name,
-    sys: { country },
-    main: { temp: 20, humidity: 55 },
+    sys: { country, sunrise: 1753680000, sunset: 1753731000 },
+    main: { temp: 20, feels_like: 18, humidity: 55 },
     weather: [{ description: "clear sky", icon: "01d" }],
     wind: { speed: 3 },
+    timezone: 0,
   },
 });
 
@@ -61,6 +62,8 @@ test("loads and displays weather for the default city on mount", async () => {
   expect(await screen.findByText(/London, GB - 20°C/)).toBeInTheDocument();
   expect(screen.getByText("Humidity: 55%")).toBeInTheDocument();
   expect(screen.getByText("Wind Speed: 3 m/s")).toBeInTheDocument();
+  expect(screen.getByText(/Feels Like: 18°C/)).toBeInTheDocument();
+  expect(screen.getByText(/Sunrise:/)).toBeInTheDocument();
 });
 
 test("searches for a typed city and shows its weather", async () => {

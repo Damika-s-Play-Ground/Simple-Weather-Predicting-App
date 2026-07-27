@@ -40,7 +40,7 @@ Added after the seed backlog was completed — re-audit of remaining worthwhile 
 
 - [x] Guard against out-of-order/stale responses so a slow earlier search can't overwrite a newer one. _useWeather now tags each request with a monotonic id (useRef) and ignores results from any superseded request; added a test that resolves an older request after a newer one and asserts the newer city stays._
 - [x] Unit-test the pure helpers (buildDailyForecast, getWeatherBackground, displayTemperature, dayName). _Added src/utils/format.test.js and src/api/weather.test.js: 11 focused unit tests covering background precedence, temp clamping/conversion, weekday formatting, and forecast aggregation/cap (16 tests total across the suite)._
-- [ ] Show "feels like" temperature and sunrise/sunset in the weather card.
+- [x] Show "feels like" temperature and sunrise/sunset in the weather card. _buildCurrent now surfaces feels_like, sunrise, sunset, and the location timezone; WeatherCard shows "Feels Like" (honoring the unit toggle) and localized Sunrise · Sunset via a new formatTime helper (UTC + city offset), all guarded for payloads without them._
 - [ ] Persist the user's unit (°C/°F) preference in localStorage.
 - [ ] Add a "Clear" control for recent searches.
 - [ ] Bump CI off deprecated Node 20 action runtime (setup-node version).
