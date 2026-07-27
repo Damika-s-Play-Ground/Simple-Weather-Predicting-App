@@ -30,6 +30,6 @@ Incremental improvements to the Create React App weather app. One focused item p
 
 ## Polish
 
-- [ ] Accessibility: labels, alt text, keyboard focus, aria-live for results/errors.
+- [x] Accessibility: labels, alt text, keyboard focus, aria-live for results/errors. _Added a visually-hidden label for the city input, role="search" on the form, aria-hidden decorative emoji (pin/heart), aria-labels on recent chips, and a visible :focus-visible outline; results/errors already use aria-live + role="alert" and icons have descriptive alt text._
 - [ ] Responsive pass + loading skeletons.
 - [x] Refresh README (features, env setup, screenshots). _Documented all new features, fixed the repo/live-app URLs (Damika-Anupama → Damika-s-Play-Ground), and added a Deployment section._

@@ -7,19 +7,24 @@ export default function SearchForm({
   return (
     <section className="form-section">
       <form
+        role="search"
+        aria-label="Search weather by city"
         onSubmit={(e) => {
           e.preventDefault();
           onSearch(e.currentTarget.elements.city.value);
         }}
       >
-        <input type="text" name="city" placeholder="City" />
+        <label htmlFor="city" className="sr-only">
+          City
+        </label>
+        <input id="city" type="text" name="city" placeholder="City" />
         <button type="submit">Search</button>
         <button
           type="button"
           className="location-button"
           onClick={onUseLocation}
         >
-          📍 Use my location
+          <span aria-hidden="true">📍 </span>Use my location
         </button>
       </form>
       {recentSearches.length > 0 && (
@@ -30,6 +35,7 @@ export default function SearchForm({
               key={city}
               type="button"
               className="recent-chip"
+              aria-label={`Show weather for ${city}`}
               onClick={() => onSearch(city)}
             >
               {city}
