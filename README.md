@@ -46,6 +46,27 @@ Install dependencies
 ```bash
 npm install
 ``````
+
+### Configure your API key
+
+The app reads the OpenWeather API key from an environment variable. Copy the
+example file and add your own key:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set `REACT_APP_OWM_KEY` to a key from
+[OpenWeather](https://home.openweathermap.org/api_keys). `.env` is gitignored so
+your key is never committed.
+
+> ⚠️ **Security note:** an OpenWeather key was previously hardcoded in the source
+> and pushed to this public repo. That key is compromised and **must be rotated** —
+> generate a new one and revoke the old key in your OpenWeather dashboard. Also
+> note that Create React App inlines `REACT_APP_*` values into the client bundle
+> at build time, so any key shipped to the browser is inherently public; use a
+> restricted free-tier key.
+
 Start the development server
 ```bash
 npm start

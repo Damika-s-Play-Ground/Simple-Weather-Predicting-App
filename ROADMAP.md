@@ -4,7 +4,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 
 ## Correctness & security
 - [x] Fix mixed-content bug: weather icon `src` uses http:// — switch to https:// (currently fails on GitHub Pages). _Switched icon URL to https://; also repaired the broken test suite (mocked axios + react-gauge-chart ESM deps, real render assertion) so `CI=true npm test` passes._
-- [ ] Move the hardcoded OpenWeather API key out of App.js into `.env` as REACT_APP_OWM_KEY read via process.env; add `.env.example`; document setup in README; note the exposed key must be rotated.
+- [x] Move the hardcoded OpenWeather API key out of App.js into `.env` as REACT_APP_OWM_KEY read via process.env; add `.env.example`; document setup in README; note the exposed key must be rotated. _App.js now reads process.env.REACT_APP_OWM_KEY; added .env.example, gitignored .env, and a README setup + key-rotation warning._
 - [ ] Request `units=metric` from the API and drop the manual Kelvin math scattered in the component.
 
 ## UX & resilience

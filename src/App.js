@@ -21,7 +21,7 @@ function App() {
 
   const fetchData = async (city) => {
     try {
-      const API_KEY = "9a2e8ebb42f78cbc76941ac42dc13e9b";
+      const API_KEY = process.env.REACT_APP_OWM_KEY;
       const result = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
       );
