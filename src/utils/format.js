@@ -42,6 +42,15 @@ export const dayName = (dateStr) =>
     weekday: "short",
   });
 
+// Format an epoch-millis timestamp as the viewer's local HH:MM clock time.
+export const formatClock = (ms) => {
+  if (ms == null) return "";
+  return new Date(ms).toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
 // Format a UTC unix timestamp (seconds) as a local wall-clock time for the
 // queried location, applying its UTC offset. Rendered in UTC so the viewer's
 // own timezone doesn't shift the result.

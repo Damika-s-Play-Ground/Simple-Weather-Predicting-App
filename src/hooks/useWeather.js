@@ -16,9 +16,12 @@ export default function useWeather(defaultCity = "London") {
       return [];
     }
   });
+  const [lastUpdated, setLastUpdated] = useState(null);
   // Monotonic id of the most recent request; responses from older requests are
   // ignored so a slow earlier lookup can't overwrite a newer one.
   const latestRequestId = useRef(0);
+  // The most recent lookup, so "refresh" can repeat it (city or coordinates).
+  const lastQuery = useRef(null);
 
   // Persist the resolved city, most-recent first, deduped (case-insensitive),
   // capped at 5.
@@ -57,6 +60,7 @@ export default function useWeather(defaultCity = "London") {
       return;
     }
 
+    lastQuery.current = { query, notFoundMessage };
     const requestId = ++latestRequestId.current;
     const isStale = () => requestId !== latestRequestId.current;
 
@@ -68,6 +72,7 @@ export default function useWeather(defaultCity = "London") {
       if (isStale()) return; // A newer request superseded this one.
       setCurrent(data);
       setForecast(days);
+      setLastUpdated(Date.now());
       addRecentSearch(data.city);
     } catch (err) {
       if (isStale()) return;
@@ -116,6 +121,13 @@ export default function useWeather(defaultCity = "London") {
     );
   };
 
+  // Re-run the most recent successful lookup to get fresh data.
+  const refresh = () => {
+    if (lastQuery.current) {
+      loadByQuery(lastQuery.current.query, lastQuery.current.notFoundMessage);
+    }
+  };
+
   useEffect(() => {
     searchCity(defaultCity); // Load a default city once on mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,8 +139,10 @@ export default function useWeather(defaultCity = "London") {
     loading,
     error,
     recentSearches,
+    lastUpdated,
     searchCity,
     useMyLocation,
     clearRecentSearches,
+    refresh,
   };
 }

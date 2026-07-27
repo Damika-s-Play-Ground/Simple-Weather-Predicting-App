@@ -53,4 +53,4 @@ Added after round 2 — further re-audit.
 - [x] Disable the Search/location buttons while a request is in flight. _SearchForm now takes a loading prop: the Search button shows "Searching…" and is disabled, the location button and recent chips are disabled, and submit (incl. Enter) is ignored while loading; the stale-response guard moved to a hook-level test (src/hooks/useWeather.test.js)._
 - [x] Replace the default CRA favicon/manifest/title with weather-app branding. _Added a weather-themed public/favicon.svg (sun + cloud) referenced from index.html, updated the meta description + theme-color to the app blue, and rebranded manifest.json (short_name/name/icons/colors). Title was already "Weather App"._
 - [ ] Add app screenshots to the README.
-- [ ] Show a "last updated" time with a manual refresh control.
+- [x] Show a "last updated" time with a manual refresh control. _useWeather tracks lastUpdated (set on each successful load) and a refresh() that replays the last city/coords lookup; WeatherCard shows "Updated HH:MM" and a Refresh button (disabled while loading). Added formatClock util + tests._

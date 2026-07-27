@@ -4,6 +4,7 @@ import {
   displayTemperature,
   dayName,
   formatTime,
+  formatClock,
 } from "./format";
 
 describe("getWeatherBackground", () => {
@@ -72,5 +73,18 @@ describe("formatTime", () => {
   it("returns an empty string when the timestamp is missing", () => {
     expect(formatTime(undefined)).toBe("");
     expect(formatTime(null)).toBe("");
+  });
+});
+
+describe("formatClock", () => {
+  it("formats an epoch-millis timestamp as HH:MM", () => {
+    expect(formatClock(new Date("2026-07-28T09:05:00").getTime())).toMatch(
+      /\d{1,2}:\d{2}/
+    );
+  });
+
+  it("returns an empty string when the timestamp is missing", () => {
+    expect(formatClock(null)).toBe("");
+    expect(formatClock(undefined)).toBe("");
   });
 });

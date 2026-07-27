@@ -4,10 +4,19 @@ import {
   temperatureToPercent,
   dayName,
   formatTime,
+  formatClock,
 } from "../utils/format";
 
 // Current conditions, the °C/°F toggle, the gauge, and the 5-day forecast.
-export default function WeatherCard({ data, forecast, unit, onUnitChange }) {
+export default function WeatherCard({
+  data,
+  forecast,
+  unit,
+  onUnitChange,
+  lastUpdated,
+  onRefresh,
+  loading = false,
+}) {
   return (
     <>
       {data.icon && (
@@ -76,6 +85,23 @@ export default function WeatherCard({ data, forecast, unit, onUnitChange }) {
           </div>
         </div>
       )}
+
+      <div className="updated-row">
+        {lastUpdated != null && (
+          <span className="updated-time">
+            Updated {formatClock(lastUpdated)}
+          </span>
+        )}
+        <button
+          type="button"
+          className="refresh-button"
+          onClick={onRefresh}
+          disabled={loading}
+          aria-label="Refresh weather"
+        >
+          <span aria-hidden="true">↻ </span>Refresh
+        </button>
+      </div>
     </>
   );
 }

@@ -14,9 +14,11 @@ function App() {
     loading,
     error,
     recentSearches,
+    lastUpdated,
     searchCity,
     useMyLocation,
     clearRecentSearches,
+    refresh,
   } = useWeather("London");
   const [unit, setUnit] = useState(() => {
     try {
@@ -72,6 +74,9 @@ function App() {
             forecast={forecast}
             unit={unit}
             onUnitChange={setUnit}
+            lastUpdated={lastUpdated}
+            onRefresh={refresh}
+            loading={loading}
           />
         )}
       </section>

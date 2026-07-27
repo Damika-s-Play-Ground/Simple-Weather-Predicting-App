@@ -123,6 +123,19 @@ test("clears recent searches when Clear is clicked", async () => {
   expect(localStorage.getItem("recentSearches")).toBeNull();
 });
 
+test("shows a last-updated time and refetches when Refresh is clicked", async () => {
+  render(<App />);
+  await screen.findByText(/London, GB - 20°C/);
+  expect(screen.getByText(/^Updated /)).toBeInTheDocument();
+
+  const callsAfterLoad = axios.get.mock.calls.length;
+  await userEvent.click(
+    screen.getByRole("button", { name: /refresh weather/i })
+  );
+  await screen.findByText(/London, GB - 20°C/);
+  expect(axios.get.mock.calls.length).toBeGreaterThan(callsAfterLoad);
+});
+
 test("disables the search controls while a request is in flight", async () => {
   let resolveWeather;
   axios.get.mockImplementation((url) => {
