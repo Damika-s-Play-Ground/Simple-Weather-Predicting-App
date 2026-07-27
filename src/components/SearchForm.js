@@ -4,14 +4,17 @@ export default function SearchForm({
   onUseLocation,
   recentSearches,
   onClearRecent,
+  loading = false,
 }) {
   return (
     <section className="form-section">
       <form
         role="search"
         aria-label="Search weather by city"
+        aria-busy={loading}
         onSubmit={(e) => {
           e.preventDefault();
+          if (loading) return; // Ignore submits (incl. Enter) while in flight.
           onSearch(e.currentTarget.elements.city.value);
         }}
       >
@@ -19,11 +22,14 @@ export default function SearchForm({
           City
         </label>
         <input id="city" type="text" name="city" placeholder="City" />
-        <button type="submit">Search</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Searching…" : "Search"}
+        </button>
         <button
           type="button"
           className="location-button"
           onClick={onUseLocation}
+          disabled={loading}
         >
           <span aria-hidden="true">📍 </span>Use my location
         </button>
@@ -38,6 +44,7 @@ export default function SearchForm({
               className="recent-chip"
               aria-label={`Show weather for ${city}`}
               onClick={() => onSearch(city)}
+              disabled={loading}
             >
               {city}
             </button>

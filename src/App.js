@@ -44,6 +44,7 @@ function App() {
         onUseLocation={useMyLocation}
         recentSearches={recentSearches}
         onClearRecent={clearRecentSearches}
+        loading={loading}
       />
       <section className="weather-section" aria-live="polite">
         {error && (

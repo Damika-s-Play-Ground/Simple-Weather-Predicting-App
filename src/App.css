@@ -76,6 +76,11 @@ button:hover {
   background-color: #357aa5;
 }
 
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Add some space around the form */
 form {
   margin: 20px;

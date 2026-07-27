@@ -50,7 +50,7 @@ Added after the seed backlog was completed — re-audit of remaining worthwhile 
 Added after round 2 — further re-audit.
 
 - [x] Show a clear "missing API key" message when REACT_APP_OWM_KEY is not configured, instead of a misleading "city not found" error. _Added isWeatherApiConfigured() and a guard in loadByQuery that surfaces a clear config error instead of fetching; tests set a stub key in beforeEach and a new test asserts the message when the key is deleted._
-- [ ] Disable the Search/location buttons while a request is in flight.
+- [x] Disable the Search/location buttons while a request is in flight. _SearchForm now takes a loading prop: the Search button shows "Searching…" and is disabled, the location button and recent chips are disabled, and submit (incl. Enter) is ignored while loading; the stale-response guard moved to a hook-level test (src/hooks/useWeather.test.js)._
 - [ ] Replace the default CRA favicon/manifest/title with weather-app branding.
 - [ ] Add app screenshots to the README.
 - [ ] Show a "last updated" time with a manual refresh control.

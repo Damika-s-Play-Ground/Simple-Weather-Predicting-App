@@ -1,4 +1,4 @@
-import { render, screen, act, waitFor } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import App from "./App";
@@ -123,37 +123,34 @@ test("clears recent searches when Clear is clicked", async () => {
   expect(localStorage.getItem("recentSearches")).toBeNull();
 });
 
-test("ignores a stale response that resolves after a newer search", async () => {
-  // Defer each city's weather response so we control resolution order.
-  const resolvers = {};
+test("disables the search controls while a request is in flight", async () => {
+  let resolveWeather;
   axios.get.mockImplementation((url) => {
     if (url.includes("/forecast")) return Promise.resolve(forecastResponse());
-    const city = decodeURIComponent(url.match(/[?&]q=([^&]+)/)[1]);
     return new Promise((resolve) => {
-      resolvers[city] = () =>
-        resolve(weatherResponse(city, city === "London" ? "GB" : "FR"));
+      resolveWeather = () => resolve(weatherResponse("London", "GB"));
     });
   });
 
-  render(<App />); // mount kicks off the London request (older)
+  render(<App />);
 
-  const input = screen.getByRole("textbox");
-  await userEvent.clear(input);
-  await userEvent.type(input, "Paris");
-  await userEvent.click(screen.getByRole("button", { name: /^search$/i }));
+  // The mount fetch stays pending: the button shows "Searching…" and is disabled.
+  const searching = await screen.findByRole("button", { name: /searching/i });
+  expect(searching).toBeDisabled();
+  expect(
+    screen.getByRole("button", { name: /use my location/i })
+  ).toBeDisabled();
 
-  // Newer (Paris) resolves first and is shown.
+  // Once it resolves, the controls re-enable.
   await act(async () => {
-    resolvers.Paris();
+    resolveWeather();
   });
-  expect(await screen.findByText(/Paris, FR - 20°C/)).toBeInTheDocument();
-
-  // Older (London) resolves last but must NOT overwrite Paris.
-  await act(async () => {
-    resolvers.London();
-  });
-  await waitFor(() =>
-    expect(screen.getByText(/Paris, FR - 20°C/)).toBeInTheDocument()
-  );
-  expect(screen.queryByText(/London, GB/)).not.toBeInTheDocument();
+  expect(
+    await screen.findByRole("button", { name: /^search$/i })
+  ).toBeEnabled();
 });
+
+// Note: the out-of-order/stale-response guard is verified at the hook level in
+// src/hooks/useWeather.test.js — the UI now disables the controls while a
+// request is in flight, so the two-concurrent-searches path can't be driven
+// through the buttons here.
