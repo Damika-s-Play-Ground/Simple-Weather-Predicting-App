@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://Damika-Anupama.github.io/Simple-Weather-Predicting-App",
+  "homepage": "https://Damika-s-Play-Ground.github.io/Simple-Weather-Predicting-App",
   "eslintConfig": {
     "extends": [
       "react-app",

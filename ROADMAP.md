@@ -27,4 +27,4 @@ Incremental improvements to the Create React App weather app. One focused item p
 ## Polish
 - [ ] Accessibility: labels, alt text, keyboard focus, aria-live for results/errors.
 - [ ] Responsive pass + loading skeletons.
-- [ ] Refresh README (features, env setup, screenshots).
+- [x] Refresh README (features, env setup, screenshots). _Documented all new features, fixed the repo/live-app URLs (Damika-Anupama → Damika-s-Play-Ground), and added a Deployment section._

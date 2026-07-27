@@ -10,15 +10,22 @@
 
 This is a simple weather predicting app built using React.js. It allows users to search for the current weather conditions in any city. The app uses data from the OpenWeather API and provides information like temperature, humidity, wind speed, and more.
 
+**🔗 Live app:** https://Damika-s-Play-Ground.github.io/Simple-Weather-Predicting-App/
+
 ---
 
 ## Features
 
 - **Search by City**: Look up the current weather in any city.
-- **Dynamic Backgrounds**: Background changes according to weather conditions.
+- **Use My Location**: One-tap weather for your current position via the Geolocation API.
+- **Recent Searches**: Recently viewed cities are saved (localStorage) as quick-access chips.
+- **5-Day Forecast**: Daily high/low cards summarising the days ahead.
+- **°C / °F Toggle**: Switch temperature units instantly without re-fetching.
+- **Dynamic Backgrounds**: Themed backgrounds for clear, clouds, rain, drizzle, snow, thunderstorm and mist/fog, with a sensible default.
 - **Weather Icons**: Visual representations of the current weather.
-- **Gauge Meter**: A gauge meter showing temperature range.
-- **Responsive**: Works on both desktop and mobile devices.
+- **Gauge Meter**: A gauge meter showing the temperature range.
+- **Resilient UX**: Inline loading, empty, and error states (no more `alert()`), plus trimmed/guarded searches.
+- **Accessible & Responsive**: `aria-live` results, labelled controls, and a layout that works on desktop and mobile.
 
 ---
 
@@ -36,7 +43,7 @@ This is a simple weather predicting app built using React.js. It allows users to
 ### Clone the repository
 
 ```bash
-git clone https://github.com/Damika-Anupama/Simple-Weather-Predicting-App.git
+git clone https://github.com/Damika-s-Play-Ground/Simple-Weather-Predicting-App.git
 ```
 Navigate to the project directory
 ```bash
@@ -71,11 +78,23 @@ Start the development server
 ```bash
 npm start
 ``````
-Deployment
-- The app is deployed using GitHub Pages. You can view the live app here.
 
-Contributing
-- Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Deployment
+
+The app is deployed to **GitHub Pages** from the `gh-pages` branch. To publish
+the current `main`:
+
+```bash
+npm run deploy
+```
+
+This builds the app and pushes `build/` to `gh-pages`. The live site is served at
+the `homepage` URL in `package.json`:
+https://Damika-s-Play-Ground.github.io/Simple-Weather-Predicting-App/
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
