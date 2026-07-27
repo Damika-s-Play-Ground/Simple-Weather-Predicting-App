@@ -19,7 +19,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 - [x] 5-day forecast section. _Added a parallel /forecast fetch collapsed into up to 5 daily min/max cards (midday icon), rendered as a strip below current conditions and honoring the °C/°F toggle._
 
 ## Code quality
-- [ ] Split App.js into components (SearchForm, WeatherCard, Gauge, Footer) + an API module + a useWeather hook.
+- [x] Split App.js into components (SearchForm, WeatherCard, Gauge, Footer) + an API module + a useWeather hook. _Extracted src/api/weather.js, src/hooks/useWeather.js, src/utils/format.js, and SearchForm/WeatherCard/Gauge/Footer components; App.js is now ~55 lines of composition with no behavior change._
 - [ ] Add Prettier + ESLint and format the codebase.
 - [ ] Write real tests: render, search happy-path, error path.
 - [x] Add a GitHub Actions workflow running build + tests on push/PR. _Added .github/workflows/ci.yml: runs tests + build on every push/PR to main and auto-deploys the built app to the gh-pages branch on push to main (REACT_APP_OWM_KEY provided via repo secret)._
