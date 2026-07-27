@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import App from "./App";
@@ -81,4 +81,39 @@ test("shows an inline error when the lookup fails", async () => {
 
   const alert = await screen.findByRole("alert");
   expect(alert).toHaveTextContent(/could not find weather/i);
+});
+
+test("ignores a stale response that resolves after a newer search", async () => {
+  // Defer each city's weather response so we control resolution order.
+  const resolvers = {};
+  axios.get.mockImplementation((url) => {
+    if (url.includes("/forecast")) return Promise.resolve(forecastResponse());
+    const city = decodeURIComponent(url.match(/[?&]q=([^&]+)/)[1]);
+    return new Promise((resolve) => {
+      resolvers[city] = () =>
+        resolve(weatherResponse(city, city === "London" ? "GB" : "FR"));
+    });
+  });
+
+  render(<App />); // mount kicks off the London request (older)
+
+  const input = screen.getByRole("textbox");
+  await userEvent.clear(input);
+  await userEvent.type(input, "Paris");
+  await userEvent.click(screen.getByRole("button", { name: /^search$/i }));
+
+  // Newer (Paris) resolves first and is shown.
+  await act(async () => {
+    resolvers.Paris();
+  });
+  expect(await screen.findByText(/Paris, FR - 20°C/)).toBeInTheDocument();
+
+  // Older (London) resolves last but must NOT overwrite Paris.
+  await act(async () => {
+    resolvers.London();
+  });
+  await waitFor(() =>
+    expect(screen.getByText(/Paris, FR - 20°C/)).toBeInTheDocument()
+  );
+  expect(screen.queryByText(/London, GB/)).not.toBeInTheDocument();
 });

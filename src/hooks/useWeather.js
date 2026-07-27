@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchWeatherByQuery } from "../api/weather";
 
 // Owns all weather data state and the actions that mutate it. Components stay
@@ -16,6 +16,9 @@ export default function useWeather(defaultCity = "London") {
       return [];
     }
   });
+  // Monotonic id of the most recent request; responses from older requests are
+  // ignored so a slow earlier lookup can't overwrite a newer one.
+  const latestRequestId = useRef(0);
 
   // Persist the resolved city, most-recent first, deduped (case-insensitive),
   // capped at 5.
@@ -37,20 +40,25 @@ export default function useWeather(defaultCity = "London") {
 
   // Shared request/response handling for both city and coordinate lookups.
   const loadByQuery = async (query, notFoundMessage) => {
+    const requestId = ++latestRequestId.current;
+    const isStale = () => requestId !== latestRequestId.current;
+
     setLoading(true);
     setError("");
     try {
       const { current: data, forecast: days } =
         await fetchWeatherByQuery(query);
+      if (isStale()) return; // A newer request superseded this one.
       setCurrent(data);
       setForecast(days);
       addRecentSearch(data.city);
     } catch (err) {
+      if (isStale()) return;
       setError(notFoundMessage);
       setForecast([]);
       console.log(err);
     } finally {
-      setLoading(false);
+      if (!isStale()) setLoading(false);
     }
   };
 

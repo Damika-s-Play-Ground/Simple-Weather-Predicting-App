@@ -33,3 +33,14 @@ Incremental improvements to the Create React App weather app. One focused item p
 - [x] Accessibility: labels, alt text, keyboard focus, aria-live for results/errors. _Added a visually-hidden label for the city input, role="search" on the form, aria-hidden decorative emoji (pin/heart), aria-labels on recent chips, and a visible :focus-visible outline; results/errors already use aria-live + role="alert" and icons have descriptive alt text._
 - [x] Responsive pass + loading skeletons. _Replaced the "Loading…" text with a shimmering WeatherSkeleton (reduced-motion aware, sr-only announcement); made the layout mobile-friendly — min-height instead of clipped 100vh, scrollable, wrapping form, and a fluid weather card with a small-screen media query._
 - [x] Refresh README (features, env setup, screenshots). _Documented all new features, fixed the repo/live-app URLs (Damika-Anupama → Damika-s-Play-Ground), and added a Deployment section._
+
+## Enhancements (round 2)
+
+Added after the seed backlog was completed — re-audit of remaining worthwhile work.
+
+- [x] Guard against out-of-order/stale responses so a slow earlier search can't overwrite a newer one. _useWeather now tags each request with a monotonic id (useRef) and ignores results from any superseded request; added a test that resolves an older request after a newer one and asserts the newer city stays._
+- [ ] Unit-test the pure helpers (buildDailyForecast, getWeatherBackground, displayTemperature, dayName).
+- [ ] Show "feels like" temperature and sunrise/sunset in the weather card.
+- [ ] Persist the user's unit (°C/°F) preference in localStorage.
+- [ ] Add a "Clear" control for recent searches.
+- [ ] Bump CI off deprecated Node 20 action runtime (setup-node version).
