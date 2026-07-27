@@ -49,6 +49,9 @@ const routeByUrl = (url) => {
 beforeEach(() => {
   jest.clearAllMocks();
   localStorage.clear();
+  // The guard in useWeather needs a key present for the normal-path tests;
+  // CI runs `npm test` without one, so set a stub here.
+  process.env.REACT_APP_OWM_KEY = "test-key";
   axios.get.mockImplementation(routeByUrl);
 });
 
@@ -77,6 +80,14 @@ test("searches for a typed city and shows its weather", async () => {
   await userEvent.click(screen.getByRole("button", { name: /^search$/i }));
 
   expect(await screen.findByText(/Paris, FR - 20°C/)).toBeInTheDocument();
+});
+
+test("shows a configuration message when the API key is missing", async () => {
+  delete process.env.REACT_APP_OWM_KEY;
+  render(<App />);
+
+  const alert = await screen.findByRole("alert");
+  expect(alert).toHaveTextContent(/not configured/i);
 });
 
 test("shows an inline error when the lookup fails", async () => {

@@ -44,3 +44,13 @@ Added after the seed backlog was completed — re-audit of remaining worthwhile 
 - [x] Persist the user's unit (°C/°F) preference in localStorage. _unit initializes from localStorage and is written back on change; added a test that presets "F" and asserts the card loads in Fahrenheit, plus localStorage.clear() in beforeEach for test isolation._
 - [x] Add a "Clear" control for recent searches. _Added a clearRecentSearches action (empties state + removes the localStorage key) exposed via useWeather and a "Clear" button next to the chips; covered by a test that clicks Clear and asserts the chips and storage key are gone._
 - [x] Bump CI off deprecated Node 20 action runtime (setup-node version). _Upgraded actions/checkout and actions/setup-node from v4 to v5 (Node 24 runtime) and bumped the build's node-version from 20 to 22 (current LTS), clearing the Node 20 deprecation warning._
+
+## Enhancements (round 3)
+
+Added after round 2 — further re-audit.
+
+- [x] Show a clear "missing API key" message when REACT_APP_OWM_KEY is not configured, instead of a misleading "city not found" error. _Added isWeatherApiConfigured() and a guard in loadByQuery that surfaces a clear config error instead of fetching; tests set a stub key in beforeEach and a new test asserts the message when the key is deleted._
+- [ ] Disable the Search/location buttons while a request is in flight.
+- [ ] Replace the default CRA favicon/manifest/title with weather-app branding.
+- [ ] Add app screenshots to the README.
+- [ ] Show a "last updated" time with a manual refresh control.

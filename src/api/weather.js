@@ -2,6 +2,10 @@ import axios from "axios";
 
 const BASE = "https://api.openweathermap.org/data/2.5";
 
+// True when an OpenWeather API key is available at build time.
+export const isWeatherApiConfigured = () =>
+  Boolean(process.env.REACT_APP_OWM_KEY);
+
 // Map the OpenWeather "current weather" payload to the shape the UI needs.
 const buildCurrent = (data) => ({
   city: data.name,

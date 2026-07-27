@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { fetchWeatherByQuery } from "../api/weather";
+import { fetchWeatherByQuery, isWeatherApiConfigured } from "../api/weather";
 
 // Owns all weather data state and the actions that mutate it. Components stay
 // presentational and read from the values this hook returns.
@@ -49,6 +49,14 @@ export default function useWeather(defaultCity = "London") {
 
   // Shared request/response handling for both city and coordinate lookups.
   const loadByQuery = async (query, notFoundMessage) => {
+    if (!isWeatherApiConfigured()) {
+      setError(
+        "Weather service is not configured: the REACT_APP_OWM_KEY environment variable is missing. See the README for setup."
+      );
+      setForecast([]);
+      return;
+    }
+
     const requestId = ++latestRequestId.current;
     const isStale = () => requestId !== latestRequestId.current;
 
