@@ -13,12 +13,19 @@ function App() {
   }, []); // Added dependency array to run useEffect only once
 
   const fetchData = async (city) => {
+    const trimmedCity = city.trim();
+    if (!trimmedCity) {
+      setError("Please enter a city name.");
+      return;
+    }
     setLoading(true);
     setError("");
     try {
       const API_KEY = process.env.REACT_APP_OWM_KEY;
       const result = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+          trimmedCity
+        )}&units=metric&appid=${API_KEY}`
       );
       setAllData({
         city: result.data.name,
@@ -31,7 +38,7 @@ function App() {
         // Add more fields as needed
       });
     } catch (err) {
-      setError(`Could not find weather for "${city}". Please check the city name and try again.`);
+      setError(`Could not find weather for "${trimmedCity}". Please check the city name and try again.`);
       console.log(err);
     } finally {
       setLoading(false);

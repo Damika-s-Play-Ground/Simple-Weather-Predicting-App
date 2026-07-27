@@ -9,7 +9,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 
 ## UX & resilience
 - [x] Replace alert() with an inline styled error message; add loading and empty states. _Replaced alert() with an inline role="alert" error box; added loading ("Loading weather…") and empty states inside an aria-live weather section; allData is now null until first load._
-- [ ] Trim/guard empty searches.
+- [x] Trim/guard empty searches. _fetchData now trims input and short-circuits blank searches with a "Please enter a city name." message; also URL-encodes the city to handle spaces/special chars safely._
 - [ ] Add backgrounds for snow, thunderstorm, mist/fog, drizzle with a sensible default.
 
 ## Features
