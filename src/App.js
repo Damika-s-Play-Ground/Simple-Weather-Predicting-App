@@ -46,17 +46,32 @@ function App() {
   };
 
   const getWeatherStyle = () => {
-    let backgroundClass;
     const description = allData ? allData.weatherDescription : "";
 
-    if (description.includes("clear")) {
+    // Order matters: OpenWeather descriptions like "thunderstorm with rain",
+    // "sleet"/"rain and snow", and "drizzle rain" all contain "rain", so the
+    // more specific conditions must be matched before the generic rain case.
+    let backgroundClass = "default-sky";
+    if (description.includes("thunderstorm")) {
+      backgroundClass = "thunderstorm-sky";
+    } else if (description.includes("snow") || description.includes("sleet")) {
+      backgroundClass = "snowy-sky";
+    } else if (description.includes("drizzle")) {
+      backgroundClass = "drizzle-sky";
+    } else if (description.includes("rain")) {
+      backgroundClass = "rainy-sky";
+    } else if (
+      description.includes("mist") ||
+      description.includes("fog") ||
+      description.includes("haze") ||
+      description.includes("smoke")
+    ) {
+      backgroundClass = "misty-sky";
+    } else if (description.includes("clear")) {
       backgroundClass = "clear-sky";
     } else if (description.includes("cloud")) {
       backgroundClass = "cloudy-sky";
-    } else if (description.includes("rain")) {
-      backgroundClass = "rainy-sky";
     }
-    // Add more conditions as needed
 
     return { backgroundClass };
   };

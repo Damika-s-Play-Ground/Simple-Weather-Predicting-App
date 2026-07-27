@@ -167,6 +167,83 @@ form {
   }
 }
 
+/* Thunderstorm Sky Animation */
+.thunderstorm-sky {
+  background: linear-gradient(180deg, #2c3e50, #4b6cb7);
+  animation: thunderstormSkyAnimation 5s infinite linear;
+}
+
+@keyframes thunderstormSkyAnimation {
+  0% {
+    background: linear-gradient(180deg, #2c3e50, #4b6cb7);
+  }
+  50% {
+    background: linear-gradient(180deg, #4b6cb7, #2c3e50);
+  }
+  100% {
+    background: linear-gradient(180deg, #2c3e50, #4b6cb7);
+  }
+}
+
+/* Snowy Sky Animation */
+.snowy-sky {
+  background: linear-gradient(180deg, #e6eef5, #b8c6db);
+  animation: snowySkyAnimation 6s infinite linear;
+}
+
+@keyframes snowySkyAnimation {
+  0% {
+    background: linear-gradient(180deg, #e6eef5, #b8c6db);
+  }
+  50% {
+    background: linear-gradient(180deg, #b8c6db, #e6eef5);
+  }
+  100% {
+    background: linear-gradient(180deg, #e6eef5, #b8c6db);
+  }
+}
+
+/* Drizzle Sky Animation */
+.drizzle-sky {
+  background: linear-gradient(180deg, #6b8ca4, #a5c1d6);
+  animation: drizzleSkyAnimation 5s infinite linear;
+}
+
+@keyframes drizzleSkyAnimation {
+  0% {
+    background: linear-gradient(180deg, #6b8ca4, #a5c1d6);
+  }
+  50% {
+    background: linear-gradient(180deg, #a5c1d6, #6b8ca4);
+  }
+  100% {
+    background: linear-gradient(180deg, #6b8ca4, #a5c1d6);
+  }
+}
+
+/* Misty / Foggy Sky Animation */
+.misty-sky {
+  background: linear-gradient(180deg, #cfd8dc, #b0bec5);
+  animation: mistySkyAnimation 7s infinite linear;
+}
+
+@keyframes mistySkyAnimation {
+  0% {
+    background: linear-gradient(180deg, #cfd8dc, #b0bec5);
+  }
+  50% {
+    background: linear-gradient(180deg, #b0bec5, #cfd8dc);
+  }
+  100% {
+    background: linear-gradient(180deg, #cfd8dc, #b0bec5);
+  }
+}
+
+/* Default Sky (fallback for unmatched conditions) */
+.default-sky {
+  background: linear-gradient(to bottom, #89cff0, #4682b4);
+}
+
 .weather-icon {
   border-radius: 50%;  /* Makes the image round */
   border: 4px solid #fff;  /* Adds a white border */
