@@ -22,7 +22,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 - [ ] Split App.js into components (SearchForm, WeatherCard, Gauge, Footer) + an API module + a useWeather hook.
 - [ ] Add Prettier + ESLint and format the codebase.
 - [ ] Write real tests: render, search happy-path, error path.
-- [ ] Add a GitHub Actions workflow running build + tests on push/PR.
+- [x] Add a GitHub Actions workflow running build + tests on push/PR. _Added .github/workflows/ci.yml: runs tests + build on every push/PR to main and auto-deploys the built app to the gh-pages branch on push to main (REACT_APP_OWM_KEY provided via repo secret)._
 
 ## Polish
 - [ ] Accessibility: labels, alt text, keyboard focus, aria-live for results/errors.

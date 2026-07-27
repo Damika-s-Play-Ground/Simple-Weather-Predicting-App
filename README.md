@@ -92,6 +92,14 @@ This builds the app and pushes `build/` to `gh-pages`. The live site is served a
 the `homepage` URL in `package.json`:
 https://Damika-s-Play-Ground.github.io/Simple-Weather-Predicting-App/
 
+### Continuous deployment
+
+Pushes to `main` also trigger `.github/workflows/ci.yml`, which runs the tests
+and build and then auto-publishes to the `gh-pages` branch — so the live site
+stays up to date without a manual `npm run deploy`. The build reads the
+`REACT_APP_OWM_KEY` **repository secret** (Settings → Secrets and variables →
+Actions).
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
