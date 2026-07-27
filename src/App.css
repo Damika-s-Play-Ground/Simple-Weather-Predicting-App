@@ -95,6 +95,34 @@ form {
 
 /* ... (existing CSS rules) */
 
+/* Temperature unit toggle */
+.unit-toggle {
+  display: inline-flex;
+  gap: 4px;
+  margin: 4px 0 12px;
+}
+
+.unit-toggle button {
+  padding: 4px 12px;
+  font-size: 14px;
+  background-color: #e0e0e0;
+  color: #333;
+  border-radius: 6px;
+}
+
+.unit-toggle button:hover {
+  background-color: #cfcfcf;
+}
+
+.unit-toggle button.active {
+  background-color: #4682b4;
+  color: white;
+}
+
+.unit-toggle button.active:hover {
+  background-color: #357aa5;
+}
+
 /* Error and status messages */
 .error-message {
   background-color: #fdecea;

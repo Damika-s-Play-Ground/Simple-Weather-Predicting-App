@@ -13,7 +13,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 - [x] Add backgrounds for snow, thunderstorm, mist/fog, drizzle with a sensible default. _Added thunderstorm/snowy/drizzle/misty background classes + a default-sky fallback; reordered matching so specific conditions win over the generic "rain" substring._
 
 ## Features
-- [ ] °C/°F unit toggle.
+- [x] °C/°F unit toggle. _Added a unit state + accessible °C/°F toggle (aria-pressed); temperature is stored in Celsius and converted for display, so switching units needs no refetch._
 - [ ] "Use my location" via the Geolocation API.
 - [ ] Recent-searches / favorite cities in localStorage.
 - [ ] 5-day forecast section.

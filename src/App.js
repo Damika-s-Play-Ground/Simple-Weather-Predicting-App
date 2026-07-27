@@ -7,6 +7,7 @@ function App() {
   const [allData, setAllData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [unit, setUnit] = useState("C"); // "C" or "F"
 
   useEffect(() => {
     fetchData("London"); // Pass the default city here
@@ -83,6 +84,10 @@ function App() {
     const percent = (tempInCelsius - minTemp) / (maxTemp - minTemp);
     return Math.min(Math.max(percent, 0), 1);
   };
+  const displayTemperature = (tempInCelsius) => {
+    const value = unit === "C" ? tempInCelsius : tempInCelsius * (9 / 5) + 32;
+    return Math.round(value);
+  };
   const chartStyle = { width: "40%" };
   // the section ta in react for sections and the main tag for the main build
   // under the main we will have sections for the form and for display the weather details
@@ -123,8 +128,30 @@ function App() {
               />
             )}
             <h3>
-              {allData.city}, {allData.country} - {Math.round(allData.temperature)}°C
+              {allData.city}, {allData.country} - {displayTemperature(allData.temperature)}°{unit}
             </h3>
+            <div
+              className="unit-toggle"
+              role="group"
+              aria-label="Temperature unit"
+            >
+              <button
+                type="button"
+                className={unit === "C" ? "active" : ""}
+                aria-pressed={unit === "C"}
+                onClick={() => setUnit("C")}
+              >
+                °C
+              </button>
+              <button
+                type="button"
+                className={unit === "F" ? "active" : ""}
+                aria-pressed={unit === "F"}
+                onClick={() => setUnit("F")}
+              >
+                °F
+              </button>
+            </div>
             <div id="outer-div">
               <GaugeChart
                 id="gauge-chart1"
