@@ -8,7 +8,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 - [x] Request `units=metric` from the API and drop the manual Kelvin math scattered in the component. _Added &units=metric to the request; temperature now arrives in Celsius, so removed the -273.15 conversions in the header and gauge helper._
 
 ## UX & resilience
-- [ ] Replace alert() with an inline styled error message; add loading and empty states.
+- [x] Replace alert() with an inline styled error message; add loading and empty states. _Replaced alert() with an inline role="alert" error box; added loading ("Loading weather…") and empty states inside an aria-live weather section; allData is now null until first load._
 - [ ] Trim/guard empty searches.
 - [ ] Add backgrounds for snow, thunderstorm, mist/fog, drizzle with a sensible default.
 
