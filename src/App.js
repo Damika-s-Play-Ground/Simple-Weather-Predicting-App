@@ -85,7 +85,7 @@ function App() {
         {allData.icon && (
           <img
             className="weather-icon"
-            src={`http://openweathermap.org/img/wn/${allData.icon}.png`}
+            src={`https://openweathermap.org/img/wn/${allData.icon}.png`}
             alt="Weather Icon"
           />
         )}
