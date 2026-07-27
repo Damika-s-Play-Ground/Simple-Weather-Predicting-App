@@ -8,6 +8,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [unit, setUnit] = useState("C"); // "C" or "F"
+  const [forecast, setForecast] = useState([]);
   const [recentSearches, setRecentSearches] = useState(() => {
     try {
       const stored = localStorage.getItem("recentSearches");
@@ -40,28 +41,58 @@ function App() {
     });
   };
 
+  // Collapse the API's 3-hourly list into up to 5 daily min/max entries,
+  // preferring the midday (12:00) icon/description for each day.
+  const buildDailyForecast = (list) => {
+    if (!Array.isArray(list)) return [];
+    const days = {};
+    list.forEach((item) => {
+      const [date, time] = item.dt_txt.split(" ");
+      if (!days[date]) {
+        days[date] = {
+          date,
+          min: item.main.temp_min,
+          max: item.main.temp_max,
+          icon: item.weather[0].icon,
+          description: item.weather[0].description,
+        };
+      }
+      days[date].min = Math.min(days[date].min, item.main.temp_min);
+      days[date].max = Math.max(days[date].max, item.main.temp_max);
+      if (time === "12:00:00") {
+        days[date].icon = item.weather[0].icon;
+        days[date].description = item.weather[0].description;
+      }
+    });
+    return Object.values(days).slice(0, 5);
+  };
+
   // Shared request/response handling for both city and coordinate lookups.
   const fetchByQuery = async (query, notFoundMessage) => {
     setLoading(true);
     setError("");
     try {
       const API_KEY = process.env.REACT_APP_OWM_KEY;
-      const result = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?${query}&units=metric&appid=${API_KEY}`
-      );
+      const base = "https://api.openweathermap.org/data/2.5";
+      const [weatherRes, forecastRes] = await Promise.all([
+        axios.get(`${base}/weather?${query}&units=metric&appid=${API_KEY}`),
+        axios.get(`${base}/forecast?${query}&units=metric&appid=${API_KEY}`),
+      ]);
       setAllData({
-        city: result.data.name,
-        country: result.data.sys.country,
-        temperature: result.data.main.temp,
-        weatherDescription: result.data.weather[0].description,
-        windSpeed: result.data.wind.speed,
-        humidity: result.data.main.humidity,
-        icon: result.data.weather[0].icon,
+        city: weatherRes.data.name,
+        country: weatherRes.data.sys.country,
+        temperature: weatherRes.data.main.temp,
+        weatherDescription: weatherRes.data.weather[0].description,
+        windSpeed: weatherRes.data.wind.speed,
+        humidity: weatherRes.data.main.humidity,
+        icon: weatherRes.data.weather[0].icon,
         // Add more fields as needed
       });
-      addRecentSearch(result.data.name);
+      setForecast(buildDailyForecast(forecastRes.data.list));
+      addRecentSearch(weatherRes.data.name);
     } catch (err) {
       setError(notFoundMessage);
+      setForecast([]);
       console.log(err);
     } finally {
       setLoading(false);
@@ -147,6 +178,10 @@ function App() {
     const value = unit === "C" ? tempInCelsius : tempInCelsius * (9 / 5) + 32;
     return Math.round(value);
   };
+  const dayName = (dateStr) =>
+    new Date(`${dateStr}T12:00:00`).toLocaleDateString(undefined, {
+      weekday: "short",
+    });
   const chartStyle = { width: "40%" };
   // the section ta in react for sections and the main tag for the main build
   // under the main we will have sections for the form and for display the weather details
@@ -247,6 +282,27 @@ function App() {
             <p>Wind Speed: {allData.windSpeed} m/s</p>
             <p>Humidity: {allData.humidity}%</p>
             {/* Add more fields as needed */}
+
+            {forecast.length > 0 && (
+              <div className="forecast">
+                <h4 className="forecast-title">5-Day Forecast</h4>
+                <div className="forecast-list">
+                  {forecast.map((day) => (
+                    <div className="forecast-day" key={day.date}>
+                      <span className="forecast-dow">{dayName(day.date)}</span>
+                      <img
+                        className="forecast-icon"
+                        src={`https://openweathermap.org/img/wn/${day.icon}.png`}
+                        alt={day.description}
+                      />
+                      <span className="forecast-temp">
+                        {displayTemperature(day.max)}° / {displayTemperature(day.min)}°
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         )}
       </section>
