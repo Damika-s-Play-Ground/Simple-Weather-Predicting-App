@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useWeather from "./hooks/useWeather";
 import { getWeatherBackground } from "./utils/format";
 import SearchForm from "./components/SearchForm";
@@ -17,7 +17,22 @@ function App() {
     searchCity,
     useMyLocation,
   } = useWeather("London");
-  const [unit, setUnit] = useState("C"); // "C" or "F"
+  const [unit, setUnit] = useState(() => {
+    try {
+      return localStorage.getItem("unit") === "F" ? "F" : "C";
+    } catch {
+      return "C";
+    }
+  }); // "C" or "F"
+
+  // Remember the chosen unit across reloads.
+  useEffect(() => {
+    try {
+      localStorage.setItem("unit", unit);
+    } catch {
+      // Ignore storage errors (e.g. private mode / quota).
+    }
+  }, [unit]);
 
   const backgroundClass = getWeatherBackground(current?.weatherDescription);
 

@@ -48,6 +48,7 @@ const routeByUrl = (url) => {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  localStorage.clear();
   axios.get.mockImplementation(routeByUrl);
 });
 
@@ -84,6 +85,14 @@ test("shows an inline error when the lookup fails", async () => {
 
   const alert = await screen.findByRole("alert");
   expect(alert).toHaveTextContent(/could not find weather/i);
+});
+
+test("restores the saved unit preference from localStorage", async () => {
+  localStorage.setItem("unit", "F");
+  render(<App />);
+
+  // 20°C -> 68°F, so the saved preference should show Fahrenheit on load.
+  expect(await screen.findByText(/London, GB - 68°F/)).toBeInTheDocument();
 });
 
 test("ignores a stale response that resolves after a newer search", async () => {
