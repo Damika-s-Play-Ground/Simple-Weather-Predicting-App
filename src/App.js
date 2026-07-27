@@ -11,22 +11,18 @@ function App() {
 
   useEffect(() => {
     fetchData("London"); // Pass the default city here
-  }, []); // Added dependency array to run useEffect only once
+    // Run once on mount to load a default city.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const fetchData = async (city) => {
-    const trimmedCity = city.trim();
-    if (!trimmedCity) {
-      setError("Please enter a city name.");
-      return;
-    }
+  // Shared request/response handling for both city and coordinate lookups.
+  const fetchByQuery = async (query, notFoundMessage) => {
     setLoading(true);
     setError("");
     try {
       const API_KEY = process.env.REACT_APP_OWM_KEY;
       const result = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-          trimmedCity
-        )}&units=metric&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?${query}&units=metric&appid=${API_KEY}`
       );
       setAllData({
         city: result.data.name,
@@ -39,11 +35,48 @@ function App() {
         // Add more fields as needed
       });
     } catch (err) {
-      setError(`Could not find weather for "${trimmedCity}". Please check the city name and try again.`);
+      setError(notFoundMessage);
       console.log(err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchData = (city) => {
+    const trimmedCity = city.trim();
+    if (!trimmedCity) {
+      setError("Please enter a city name.");
+      return;
+    }
+    fetchByQuery(
+      `q=${encodeURIComponent(trimmedCity)}`,
+      `Could not find weather for "${trimmedCity}". Please check the city name and try again.`
+    );
+  };
+
+  const fetchByLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser.");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        fetchByQuery(
+          `lat=${latitude}&lon=${longitude}`,
+          "Could not get weather for your location. Please try searching by city."
+        );
+      },
+      (err) => {
+        setLoading(false);
+        setError(
+          "Could not access your location. Please allow location access or search by city."
+        );
+        console.log(err);
+      }
+    );
   };
 
   const getWeatherStyle = () => {
@@ -102,6 +135,13 @@ function App() {
         >
           <input type="text" name="city" placeholder="City" />
           <button type="submit">Search</button>
+          <button
+            type="button"
+            className="location-button"
+            onClick={fetchByLocation}
+          >
+            📍 Use my location
+          </button>
         </form>
       </section>
       <section className="weather-section" aria-live="polite">

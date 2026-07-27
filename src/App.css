@@ -95,6 +95,15 @@ form {
 
 /* ... (existing CSS rules) */
 
+/* Use-my-location button */
+.location-button {
+  background-color: #5a6b7b;
+}
+
+.location-button:hover {
+  background-color: #46545f;
+}
+
 /* Temperature unit toggle */
 .unit-toggle {
   display: inline-flex;
