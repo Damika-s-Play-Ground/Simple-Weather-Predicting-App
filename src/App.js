@@ -8,12 +8,37 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [unit, setUnit] = useState("C"); // "C" or "F"
+  const [recentSearches, setRecentSearches] = useState(() => {
+    try {
+      const stored = localStorage.getItem("recentSearches");
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
 
   useEffect(() => {
     fetchData("London"); // Pass the default city here
     // Run once on mount to load a default city.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Persist the resolved city, most-recent first, deduped (case-insensitive), capped at 5.
+  const addRecentSearch = (cityName) => {
+    if (!cityName) return;
+    setRecentSearches((prev) => {
+      const next = [
+        cityName,
+        ...prev.filter((c) => c.toLowerCase() !== cityName.toLowerCase()),
+      ].slice(0, 5);
+      try {
+        localStorage.setItem("recentSearches", JSON.stringify(next));
+      } catch {
+        // Ignore storage errors (e.g. private mode / quota).
+      }
+      return next;
+    });
+  };
 
   // Shared request/response handling for both city and coordinate lookups.
   const fetchByQuery = async (query, notFoundMessage) => {
@@ -34,6 +59,7 @@ function App() {
         icon: result.data.weather[0].icon,
         // Add more fields as needed
       });
+      addRecentSearch(result.data.name);
     } catch (err) {
       setError(notFoundMessage);
       console.log(err);
@@ -143,6 +169,21 @@ function App() {
             📍 Use my location
           </button>
         </form>
+        {recentSearches.length > 0 && (
+          <div className="recent-searches" aria-label="Recent searches">
+            <span className="recent-label">Recent:</span>
+            {recentSearches.map((city) => (
+              <button
+                key={city}
+                type="button"
+                className="recent-chip"
+                onClick={() => fetchData(city)}
+              >
+                {city}
+              </button>
+            ))}
+          </div>
+        )}
       </section>
       <section className="weather-section" aria-live="polite">
         {error && (

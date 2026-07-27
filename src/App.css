@@ -95,6 +95,34 @@ form {
 
 /* ... (existing CSS rules) */
 
+/* Recent searches */
+.recent-searches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.recent-label {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.recent-chip {
+  padding: 4px 10px;
+  font-size: 13px;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: #333;
+  border-radius: 14px;
+}
+
+.recent-chip:hover {
+  background-color: #fff;
+}
+
 /* Use-my-location button */
 .location-button {
   background-color: #5a6b7b;

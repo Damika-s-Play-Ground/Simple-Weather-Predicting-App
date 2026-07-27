@@ -15,7 +15,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 ## Features
 - [x] °C/°F unit toggle. _Added a unit state + accessible °C/°F toggle (aria-pressed); temperature is stored in Celsius and converted for display, so switching units needs no refetch._
 - [x] "Use my location" via the Geolocation API. _Added a "📍 Use my location" button; refactored fetch into a shared fetchByQuery helper reused by city and lat/lon lookups, with graceful errors for unsupported/denied geolocation._
-- [ ] Recent-searches / favorite cities in localStorage.
+- [x] Recent-searches / favorite cities in localStorage. _Successful lookups are saved to localStorage (deduped, capped at 5, most-recent first) and rendered as clickable chips under the form; storage errors are ignored gracefully._
 - [ ] 5-day forecast section.
 
 ## Code quality
