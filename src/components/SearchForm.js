@@ -9,7 +9,7 @@ export default function SearchForm({
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          onSearch(e.target.city.value);
+          onSearch(e.currentTarget.elements.city.value);
         }}
       >
         <input type="text" name="city" placeholder="City" />

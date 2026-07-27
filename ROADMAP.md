@@ -25,7 +25,7 @@ Incremental improvements to the Create React App weather app. One focused item p
 
 - [x] Split App.js into components (SearchForm, WeatherCard, Gauge, Footer) + an API module + a useWeather hook. _Extracted src/api/weather.js, src/hooks/useWeather.js, src/utils/format.js, and SearchForm/WeatherCard/Gauge/Footer components; App.js is now ~55 lines of composition with no behavior change._
 - [x] Add Prettier + ESLint and format the codebase. _CRA already ships ESLint (react-app); added Prettier + eslint-config-prettier, a .prettierrc.json + .prettierignore, format/format:check scripts, extended eslintConfig with "prettier", and formatted the whole repo._
-- [ ] Write real tests: render, search happy-path, error path.
+- [x] Write real tests: render, search happy-path, error path. _Added 4 tests: form render, default-city mount fetch, typed-city search, and failed-lookup inline error; axios is mocked per-URL. Also hardened SearchForm to read the input via e.currentTarget.elements.city._
 - [x] Add a GitHub Actions workflow running build + tests on push/PR. _Added .github/workflows/ci.yml: runs tests + build on every push/PR to main and auto-deploys the built app to the gh-pages branch on push to main (REACT_APP_OWM_KEY provided via repo secret)._
 
 ## Polish
