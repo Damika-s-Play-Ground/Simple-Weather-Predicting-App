@@ -2,7 +2,7 @@
   <h1> Simple Weather Predicting App 🌦️ </h1>
 </div>
 <p align="center">
-  <img src="./asset/preview.png" alt="App Preview" height="400"/>
+  <img src="./asset/screenshot.png" alt="Simple Weather Predicting App — current conditions and 5-day forecast" width="640"/>
 </p>
 
 ## About
@@ -25,6 +25,14 @@ This is a simple weather predicting app built using React.js. It allows users to
 - **Gauge Meter**: A gauge meter showing the temperature range.
 - **Resilient UX**: Inline loading, empty, and error states (no more `alert()`), plus trimmed/guarded searches.
 - **Accessible & Responsive**: `aria-live` results, labelled controls, and a layout that works on desktop and mobile.
+
+---
+
+## Screenshots
+
+| Desktop                                                              | Mobile                                                                     |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| <img src="./asset/screenshot.png" alt="Desktop layout" width="420"/> | <img src="./asset/screenshot-mobile.png" alt="Mobile layout" width="200"/> |
 
 ---
 
