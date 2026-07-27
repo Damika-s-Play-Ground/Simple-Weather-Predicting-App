@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    # Needed so the GITHUB_TOKEN can push the built site to the gh-pages branch.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
