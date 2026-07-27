@@ -5,7 +5,6 @@
   <img src="./asset/preview.png" alt="App Preview" height="400"/>
 </p>
 
-
 ## About
 
 This is a simple weather predicting app built using React.js. It allows users to search for the current weather conditions in any city. The app uses data from the OpenWeather API and provides information like temperature, humidity, wind speed, and more.
@@ -45,14 +44,18 @@ This is a simple weather predicting app built using React.js. It allows users to
 ```bash
 git clone https://github.com/Damika-s-Play-Ground/Simple-Weather-Predicting-App.git
 ```
+
 Navigate to the project directory
+
 ```bash
 cd Simple-Weather-Predicting-App
-``````
+```
+
 Install dependencies
+
 ```bash
 npm install
-``````
+```
 
 ### Configure your API key
 
@@ -75,9 +78,10 @@ your key is never committed.
 > restricted free-tier key.
 
 Start the development server
+
 ```bash
 npm start
-``````
+```
 
 ## Deployment
 

@@ -40,7 +40,8 @@ export default function useWeather(defaultCity = "London") {
     setLoading(true);
     setError("");
     try {
-      const { current: data, forecast: days } = await fetchWeatherByQuery(query);
+      const { current: data, forecast: days } =
+        await fetchWeatherByQuery(query);
       setCurrent(data);
       setForecast(days);
       addRecentSearch(data.city);

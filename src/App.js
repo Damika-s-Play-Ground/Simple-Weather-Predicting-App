@@ -34,10 +34,14 @@ function App() {
           </p>
         )}
 
-        {loading && !error && <p className="status-message">Loading weather…</p>}
+        {loading && !error && (
+          <p className="status-message">Loading weather…</p>
+        )}
 
         {!loading && !error && !current && (
-          <p className="status-message">Search for a city to see its weather.</p>
+          <p className="status-message">
+            Search for a city to see its weather.
+          </p>
         )}
 
         {!loading && !error && current && (

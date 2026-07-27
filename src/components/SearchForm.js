@@ -1,5 +1,9 @@
 // City search form plus the "use my location" action and recent-search chips.
-export default function SearchForm({ onSearch, onUseLocation, recentSearches }) {
+export default function SearchForm({
+  onSearch,
+  onUseLocation,
+  recentSearches,
+}) {
   return (
     <section className="form-section">
       <form
@@ -10,7 +14,11 @@ export default function SearchForm({ onSearch, onUseLocation, recentSearches }) 
       >
         <input type="text" name="city" placeholder="City" />
         <button type="submit">Search</button>
-        <button type="button" className="location-button" onClick={onUseLocation}>
+        <button
+          type="button"
+          className="location-button"
+          onClick={onUseLocation}
+        >
           📍 Use my location
         </button>
       </form>

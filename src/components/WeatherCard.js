@@ -17,8 +17,8 @@ export default function WeatherCard({ data, forecast, unit, onUnitChange }) {
         />
       )}
       <h3>
-        {data.city}, {data.country} - {displayTemperature(data.temperature, unit)}°
-        {unit}
+        {data.city}, {data.country} -{" "}
+        {displayTemperature(data.temperature, unit)}°{unit}
       </h3>
       <div className="unit-toggle" role="group" aria-label="Temperature unit">
         <button
