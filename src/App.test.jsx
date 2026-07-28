@@ -1,4 +1,4 @@
-import { render, screen, act, fireEvent } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import App from "./App";
@@ -81,13 +81,14 @@ test("loads and displays weather for the default city on mount", async () => {
 });
 
 test("searches for a typed city and shows its weather", async () => {
+  const user = userEvent.setup();
   render(<App />);
   await screen.findByText(/London, GB - 20°C/); // wait for the mount fetch
 
   const input = screen.getByRole("combobox");
   await userEvent.clear(input);
-  await userEvent.type(input, "Paris");
-  await userEvent.click(screen.getByRole("button", { name: /^search$/i }));
+  await user.type(input, "Paris");
+  await user.click(screen.getByRole("button", { name: /^search$/i }));
 
   expect(await screen.findByText(/Paris, FR - 20°C/)).toBeInTheDocument();
 });
@@ -128,13 +129,14 @@ test("restores the saved unit preference from localStorage", async () => {
 });
 
 test("clears recent searches when Clear is clicked", async () => {
+  const user = userEvent.setup();
   render(<App />);
   // The default London fetch records a recent-search chip.
   expect(
     await screen.findByRole("button", { name: /show weather for london/i })
   ).toBeInTheDocument();
 
-  await userEvent.click(
+  await user.click(
     screen.getByRole("button", { name: /clear recent searches/i })
   );
 
@@ -145,14 +147,13 @@ test("clears recent searches when Clear is clicked", async () => {
 });
 
 test("shows a last-updated time and refetches when Refresh is clicked", async () => {
+  const user = userEvent.setup();
   render(<App />);
   await screen.findByText(/London, GB - 20°C/);
   expect(screen.getByText(/^Updated /)).toBeInTheDocument();
 
   const callsAfterLoad = axios.get.mock.calls.length;
-  await userEvent.click(
-    screen.getByRole("button", { name: /refresh weather/i })
-  );
+  await user.click(screen.getByRole("button", { name: /refresh weather/i }));
   await screen.findByText(/London, GB - 20°C/);
   expect(axios.get.mock.calls.length).toBeGreaterThan(callsAfterLoad);
 });
@@ -190,18 +191,18 @@ test("disables the search controls while a request is in flight", async () => {
 // through the buttons here.
 
 test("autocomplete suggests cities and selects via keyboard", async () => {
+  const user = userEvent.setup();
   render(<App />);
   await screen.findByText(/London, GB - 20°C/);
 
   const input = screen.getByRole("combobox");
-  await userEvent.type(input, "Londo");
+  await user.type(input, "Londo");
 
   const options = await screen.findAllByRole("option");
   expect(options[0]).toHaveTextContent("London, England, GB");
   expect(options[1]).toHaveTextContent("Londonderry, GB");
 
-  fireEvent.keyDown(input, { key: "ArrowDown" });
-  fireEvent.keyDown(input, { key: "Enter" });
+  await user.keyboard("{ArrowDown}{Enter}");
 
   // Selection fetches by exact coordinates and fills the input.
   await screen.findByText(/London, GB - 20°C/);
@@ -214,21 +215,23 @@ test("autocomplete suggests cities and selects via keyboard", async () => {
 });
 
 test("escape closes the suggestion list", async () => {
+  const user = userEvent.setup();
   render(<App />);
   await screen.findByText(/London, GB - 20°C/);
 
   const box = screen.getByRole("combobox");
-  await userEvent.type(box, "Londo");
+  await user.type(box, "Londo");
   await screen.findByRole("listbox");
-  fireEvent.keyDown(box, { key: "Escape" });
+  await user.keyboard("{Escape}");
   expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
 });
 
 test("pins and unpins the current city as a favorite", async () => {
+  const user = userEvent.setup();
   render(<App />);
   await screen.findByText(/London, GB - 20°C/);
 
-  await userEvent.click(
+  await user.click(
     screen.getByRole("button", { name: /add london to favorites/i })
   );
   expect(
@@ -236,7 +239,7 @@ test("pins and unpins the current city as a favorite", async () => {
   ).toBeInTheDocument();
   expect(JSON.parse(localStorage.getItem("favorites"))[0].name).toBe("London");
 
-  await userEvent.click(
+  await user.click(
     screen.getByRole("button", { name: /remove london from favorites/i })
   );
   expect(

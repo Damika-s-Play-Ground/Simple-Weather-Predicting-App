@@ -13,7 +13,7 @@ Maintenance rule: after editing this table, verify the edit landed with a
 | E00  | E00-bugs.md             | CONTINUOUS          | 3/3        | —          | Always drained first                 |
 | E01  | E01-ci-hardening.md     | DONE                | 30/30      | M0         |                                      |
 | E02  | E02-vite-migration.md   | DONE                | 21/21      | M0         | CRA removed; audit 69→0              |
-| E04  | E04-testing-infra.md    | QUEUED (authored)   | 1/31       | M0–M1      | MSW, Playwright, axe, RTL majors     |
+| E04  | E04-testing-infra.md    | ACTIVE              | 4/31       | M0–M1      | MSW, Playwright, axe, RTL majors     |
 | E06  | E06-design-system.md    | DONE                | 19/19      | M0–M1      | Tokens + primitives + split styles   |
 | E03  | E03-typescript.md       | QUEUED (unauthored) | 0/~80      | M0–M1      | Leaf-first, allowJs                  |
 | E21  | E21-dark-mode.md        | DONE                | 8/8        | M1         | Tri-state, no-flash, dark skies      |
