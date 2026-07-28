@@ -10,7 +10,7 @@ coverage floors.
 ## Library upgrades
 
 - [ ] [E04-001] (M) Upgrade @testing-library/jest-dom 5 → 6 and switch setup to the `/vitest` entry — AC: suite green on v6 matchers.
-- [ ] [E04-002] (M) Upgrade @testing-library/react 13 → 16 — AC: suite green; no deprecated API warnings.
+- [x] [E04-002] (M) Upgrade @testing-library/react 13 → 16 — AC: suite green; no deprecated API warnings.
 - [ ] [E04-003] (L) Upgrade @testing-library/user-event 13 → 14 and migrate all suites to the async `userEvent.setup()` API — AC: no direct `userEvent.<action>` static calls remain.
 - [ ] [E04-004] (S) Replace `fireEvent.keyDown` combobox navigation in App tests with v14 `user.keyboard` — AC: keyboard-nav test uses userEvent only.
 - [ ] [E04-005] (S) Add eslint-plugin-testing-library (flat config, recommended rules for test files) — AC: lint passes with the plugin active.
