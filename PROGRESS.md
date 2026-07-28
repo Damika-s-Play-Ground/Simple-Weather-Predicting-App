@@ -10,3 +10,4 @@ The loop reads only the tail. Do not edit existing lines.
 size: 168843
 2026-07-28T04:04Z | it002 | E02-001..021 | a94b62c | CRA->Vite+Vitest migration, SVG gauge, axios bump; audit 69->0, CI+smoke verified | gates:fmt,test(37),lint,build | smoke:pass
 size: 65871
+2026-07-28T04:08Z | it003 | E01-001..030 | 3cc3689 | CI hardening sweep (29 done, 019 obsolete) | gates:fmt,test(37),lint,build | smoke:pending-ci
