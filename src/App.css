@@ -15,7 +15,7 @@
 button:focus-visible,
 input:focus-visible,
 a:focus-visible {
-  outline: 3px solid #1b3a57;
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
@@ -31,7 +31,11 @@ main {
   padding: 24px 12px;
   box-sizing: border-box;
   overflow-y: auto;
-  background: linear-gradient(to bottom, #89cff0, #4682b4);
+  background: linear-gradient(
+    to bottom,
+    var(--page-gradient-from),
+    var(--page-gradient-to)
+  );
 }
 
 /* Form Section */
@@ -46,34 +50,33 @@ form {
   gap: 10px;
 }
 
-/* Enhanced Form Section */
 input {
   padding: 10px;
-  font-size: 18px;
+  font-size: var(--text-xl);
   border: none;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
   outline: none;
   transition: box-shadow 0.3s ease;
 }
 
 input:focus {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-2);
 }
 
 button {
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: var(--text-xl);
   cursor: pointer;
-  background-color: #4682b4;
-  color: white;
+  background-color: var(--accent);
+  color: var(--accent-contrast);
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #357aa5;
+  background-color: var(--accent-hover);
 }
 
 button:disabled {
@@ -81,21 +84,15 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Add some space around the form */
-form {
-  margin: 20px;
-}
-
-/* Weather Section */
-/* Enhanced Weather Section */
+/* Weather section */
 .weather-section {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--surface);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   text-align: center;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card);
 }
 
 .weather-section h1 {
@@ -114,16 +111,9 @@ form {
 .weather-section p {
   font-size: 1em;
   margin: 10px 0;
-  color: #333;
+  color: var(--text-primary);
   transition: all 0.3s ease-in-out;
 }
-
-/* Add some space around the form for better layout */
-.form-section {
-  margin: 20px;
-}
-
-/* ... (existing CSS rules) */
 
 /* SVG temperature gauge */
 .gauge {
@@ -148,20 +138,20 @@ form {
 }
 
 .updated-time {
-  font-size: 12px;
-  color: #555;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
 }
 
 .refresh-button {
   padding: 6px 12px;
-  font-size: 13px;
-  background-color: #4682b4;
-  color: #fff;
-  border-radius: 8px;
+  font-size: var(--text-md);
+  background-color: var(--accent);
+  color: var(--text-inverse);
+  border-radius: var(--radius-md);
 }
 
 .refresh-button:hover {
-  background-color: #357aa5;
+  background-color: var(--accent-hover);
 }
 
 /* Hourly forecast strip */
@@ -180,13 +170,13 @@ form {
   flex: 0 0 auto;
   min-width: 64px;
   padding: 8px 6px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  background-color: var(--surface-raised);
+  border-radius: var(--radius-md);
 }
 
 .hourly-time {
-  font-size: 12px;
-  color: #555;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -195,8 +185,8 @@ form {
 }
 
 .hourly-pop {
-  font-size: 11px;
-  color: #2f6fa5;
+  font-size: var(--text-xs);
+  color: var(--info-fg);
   min-height: 14px;
 }
 
@@ -224,13 +214,13 @@ form {
   align-items: center;
   min-width: 64px;
   padding: 8px 6px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  background-color: var(--surface-raised);
+  border-radius: var(--radius-md);
 }
 
 .forecast-dow {
   font-weight: 600;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .forecast-icon {
@@ -239,7 +229,7 @@ form {
 }
 
 .forecast-temp {
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 /* Recent searches */
@@ -253,43 +243,43 @@ form {
 }
 
 .recent-label {
-  color: #fff;
-  font-size: 14px;
+  color: var(--text-inverse);
+  font-size: var(--text-base);
   font-weight: 500;
 }
 
 .recent-chip {
   padding: 4px 10px;
-  font-size: 13px;
-  background-color: rgba(255, 255, 255, 0.85);
-  color: #333;
-  border-radius: 14px;
+  font-size: var(--text-md);
+  background-color: var(--surface-chip);
+  color: var(--text-primary);
+  border-radius: var(--radius-pill);
 }
 
 .recent-chip:hover {
-  background-color: #fff;
+  background-color: var(--surface-chip);
 }
 
 .recent-clear {
   padding: 4px 10px;
-  font-size: 13px;
+  font-size: var(--text-md);
   background-color: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 14px;
+  color: var(--text-inverse);
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-pill);
 }
 
 .recent-clear:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--surface-raised);
 }
 
 /* Use-my-location button */
 .location-button {
-  background-color: #5a6b7b;
+  background-color: var(--muted-action);
 }
 
 .location-button:hover {
-  background-color: #46545f;
+  background-color: var(--muted-action-hover);
 }
 
 /* Temperature unit toggle */
@@ -301,31 +291,31 @@ form {
 
 .unit-toggle button {
   padding: 4px 12px;
-  font-size: 14px;
-  background-color: #e0e0e0;
-  color: #333;
-  border-radius: 6px;
+  font-size: var(--text-base);
+  background-color: var(--toggle-bg);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
 }
 
 .unit-toggle button:hover {
-  background-color: #cfcfcf;
+  background-color: var(--toggle-bg-hover);
 }
 
 .unit-toggle button.active {
-  background-color: #4682b4;
-  color: white;
+  background-color: var(--accent);
+  color: var(--accent-contrast);
 }
 
 .unit-toggle button.active:hover {
-  background-color: #357aa5;
+  background-color: var(--accent-hover);
 }
 
 /* Error and status messages */
 .error-message {
-  background-color: #fdecea;
-  color: #b3261e;
-  border: 1px solid #f5c2c0;
-  border-radius: 8px;
+  background-color: var(--danger-bg);
+  color: var(--danger-fg);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-md);
   padding: 12px 16px;
   margin: 0;
   font-size: 1em;
@@ -333,7 +323,7 @@ form {
 }
 
 .status-message {
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.1em;
   margin: 0;
 }
@@ -466,28 +456,20 @@ form {
 
 /* Default Sky (fallback for unmatched conditions) */
 .default-sky {
-  background: linear-gradient(to bottom, #89cff0, #4682b4);
+  background: linear-gradient(
+    to bottom,
+    var(--page-gradient-from),
+    var(--page-gradient-to)
+  );
 }
 
 .weather-icon {
   border-radius: 50%; /* Makes the image round */
-  border: 4px solid #fff; /* Adds a white border */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adds a shadow */
+  border: 4px solid var(--gray-0); /* Adds a white border */
+  box-shadow: var(--shadow-icon);
   width: 50px; /* Sets width */
   height: 50px; /* Sets height */
   object-fit: cover; /* Ensures the image covers the whole area */
-}
-
-#outer-div {
-  width: 100%;
-  text-align: center;
-  transition: all 0.3s ease-in-out;
-}
-
-#gauge-chart1 {
-  display: inline-block;
-  margin: 0 auto;
-  padding: 3px;
 }
 
 .app-footer {
@@ -495,11 +477,11 @@ form {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #4682b4;
-  color: white;
+  background-color: var(--accent);
+  color: var(--accent-contrast);
   text-align: center;
   padding: 10px 0;
-  font-size: 16px;
+  font-size: var(--text-lg);
 }
 
 .heart {
@@ -507,7 +489,7 @@ form {
 }
 
 .app-footer a {
-  color: white;
+  color: var(--accent-contrast);
   margin-left: 5px;
   text-decoration: none;
 }
@@ -524,13 +506,13 @@ form {
 .skeleton {
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.08) 25%,
-    rgba(0, 0, 0, 0.16) 37%,
-    rgba(0, 0, 0, 0.08) 63%
+    var(--skeleton-base) 25%,
+    var(--skeleton-highlight) 37%,
+    var(--skeleton-base) 63%
   );
   background-size: 400% 100%;
   animation: skeleton-shimmer 1.4s ease infinite;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 @keyframes skeleton-shimmer {
@@ -599,7 +581,7 @@ form {
 
   input,
   button {
-    font-size: 16px;
+    font-size: var(--text-lg);
   }
 
   .weather-section {

@@ -6,4 +6,4 @@ failed gates, live-smoke failures, reverts awaiting reland, and audit findings.
 Format: `- [ ] [BUG-###] (S|M|L) description — repro/AC: one clause.`
 IDs are sequential and never reused.
 
-_No open items._
+- [ ] [BUG-001] (S) actions/upload-artifact@v4 targets deprecated Node 20 (runner warning) — AC: bump upload/download-artifact to a current major after verifying the tag exists; warning gone from run logs.
