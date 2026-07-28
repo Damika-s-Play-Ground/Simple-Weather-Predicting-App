@@ -30,6 +30,7 @@
   --surface: rgba(255, 255, 255, 0.8);
   --surface-raised: rgba(255, 255, 255, 0.2);
   --surface-chip: rgba(255, 255, 255, 0.85);
+  --surface-solid: #ffffff;
   --border-inverse: rgba(255, 255, 255, 0.7);
 
   /* --- Semantic: text --- */
@@ -95,6 +96,7 @@
   --surface: rgba(24, 33, 43, 0.88);
   --surface-raised: rgba(255, 255, 255, 0.08);
   --surface-chip: rgba(255, 255, 255, 0.16);
+  --surface-solid: #1e2833;
   --border-inverse: rgba(255, 255, 255, 0.4);
 
   --text-primary: #e8edf2;

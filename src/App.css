@@ -232,6 +232,56 @@ button:disabled {
   font-size: var(--text-md);
 }
 
+/* Autocomplete */
+.autocomplete {
+  position: relative;
+}
+
+.suggestion-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: var(--space-1) 0 0;
+  padding: var(--space-1);
+  list-style: none;
+  background-color: var(--surface-solid);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-2);
+  text-align: left;
+}
+
+.suggestion {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: var(--text-base);
+}
+
+.suggestion.active,
+.suggestion:hover {
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* Favorite star */
+.favorite-star {
+  margin-left: var(--space-2);
+  padding: 0 var(--space-2);
+  font-size: var(--text-xl);
+  background: none;
+  color: var(--accent);
+  border: none;
+  vertical-align: middle;
+}
+
+.favorite-star:hover {
+  background: none;
+  color: var(--accent-hover);
+}
+
 /* Recent searches */
 .recent-searches {
   display: flex;

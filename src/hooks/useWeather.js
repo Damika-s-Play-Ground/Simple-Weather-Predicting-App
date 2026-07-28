@@ -128,6 +128,16 @@ export default function useWeather(defaultCity = "London") {
     );
   };
 
+  // Fetch by exact coordinates (autocomplete selection / favorites).
+  const searchCoords = (lat, lon, label = "") => {
+    loadByQuery(
+      `lat=${lat}&lon=${lon}`,
+      label
+        ? `Could not load weather for ${label}. Please try again.`
+        : "Could not load weather for that location. Please try again."
+    );
+  };
+
   // Re-run the most recent successful lookup to get fresh data.
   const refresh = () => {
     if (lastQuery.current) {
@@ -149,6 +159,7 @@ export default function useWeather(defaultCity = "London") {
     recentSearches,
     lastUpdated,
     searchCity,
+    searchCoords,
     useMyLocation,
     clearRecentSearches,
     refresh,

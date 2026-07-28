@@ -2,6 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import useWeather from "./hooks/useWeather";
 import useTheme from "./hooks/useTheme";
+import useFavorites from "./hooks/useFavorites";
 import { getWeatherBackground } from "./utils/format";
 import SearchForm from "./components/SearchForm";
 import WeatherCard from "./components/WeatherCard";
@@ -18,10 +19,12 @@ function App() {
     recentSearches,
     lastUpdated,
     searchCity,
+    searchCoords,
     useMyLocation,
     clearRecentSearches,
     refresh,
   } = useWeather("London");
+  const { favorites, isFavorite, toggleFavorite } = useFavorites();
   const [unit, setUnit] = useState(() => {
     try {
       return localStorage.getItem("unit") === "F" ? "F" : "C";
@@ -58,9 +61,11 @@ function App() {
       </button>
       <SearchForm
         onSearch={searchCity}
+        onSearchCoords={searchCoords}
         onUseLocation={useMyLocation}
         recentSearches={recentSearches}
         onClearRecent={clearRecentSearches}
+        favorites={favorites}
         loading={loading}
       />
       <section className="weather-section" aria-live="polite">
@@ -93,6 +98,8 @@ function App() {
             lastUpdated={lastUpdated}
             onRefresh={refresh}
             loading={loading}
+            favorite={isFavorite(current.city)}
+            onToggleFavorite={toggleFavorite}
           />
         )}
       </section>

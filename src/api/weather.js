@@ -10,6 +10,8 @@ export const isWeatherApiConfigured = () =>
 const buildCurrent = (data) => ({
   city: data.name,
   country: data.sys.country,
+  lat: data.coord?.lat,
+  lon: data.coord?.lon,
   temperature: data.main.temp,
   feelsLike: data.main.feels_like,
   weatherDescription: data.weather[0].description,

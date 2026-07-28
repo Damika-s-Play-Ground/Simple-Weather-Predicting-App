@@ -1,4 +1,4 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, act, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import App from "./App";
@@ -12,6 +12,7 @@ vi.mock("axios", () => ({
 const weatherResponse = (name, country) => ({
   data: {
     name,
+    coord: { lat: 51.5, lon: -0.12 },
     sys: { country, sunrise: 1753680000, sunset: 1753731000 },
     main: { temp: 20, feels_like: 18, humidity: 55 },
     weather: [{ description: "clear sky", icon: "01d" }],
@@ -36,8 +37,19 @@ const forecastResponse = () => ({
 
 // Resolve the returned city from the request's `q=` param so a search for a
 // different city produces different data than the default mount fetch.
+const geoResponse = () => ({
+  data: [
+    { name: "London", state: "England", country: "GB", lat: 51.5, lon: -0.12 },
+    { name: "Londonderry", country: "GB", lat: 55, lon: -7.3 },
+  ],
+});
+
 const routeByUrl = (url) => {
+  if (url.includes("/geo/1.0/direct")) return Promise.resolve(geoResponse());
   if (url.includes("/forecast")) return Promise.resolve(forecastResponse());
+  // Coordinate lookups (autocomplete/favorites) resolve to London.
+  if (url.includes("lat="))
+    return Promise.resolve(weatherResponse("London", "GB"));
   const match = url.match(/[?&]q=([^&]+)/);
   const city = match ? decodeURIComponent(match[1]) : "Local";
   const country = city === "London" ? "GB" : city === "Paris" ? "FR" : "XX";
@@ -72,7 +84,7 @@ test("searches for a typed city and shows its weather", async () => {
   render(<App />);
   await screen.findByText(/London, GB - 20°C/); // wait for the mount fetch
 
-  const input = screen.getByRole("textbox");
+  const input = screen.getByRole("combobox");
   await userEvent.clear(input);
   await userEvent.type(input, "Paris");
   await userEvent.click(screen.getByRole("button", { name: /^search$/i }));
@@ -176,3 +188,58 @@ test("disables the search controls while a request is in flight", async () => {
 // src/hooks/useWeather.test.js — the UI now disables the controls while a
 // request is in flight, so the two-concurrent-searches path can't be driven
 // through the buttons here.
+
+test("autocomplete suggests cities and selects via keyboard", async () => {
+  render(<App />);
+  await screen.findByText(/London, GB - 20°C/);
+
+  const input = screen.getByRole("combobox");
+  await userEvent.type(input, "Londo");
+
+  const options = await screen.findAllByRole("option");
+  expect(options[0]).toHaveTextContent("London, England, GB");
+  expect(options[1]).toHaveTextContent("Londonderry, GB");
+
+  fireEvent.keyDown(input, { key: "ArrowDown" });
+  fireEvent.keyDown(input, { key: "Enter" });
+
+  // Selection fetches by exact coordinates and fills the input.
+  await screen.findByText(/London, GB - 20°C/);
+  const coordCall = axios.get.mock.calls.find(([url]) =>
+    url.includes("lat=51.5&lon=-0.12")
+  );
+  expect(coordCall).toBeTruthy();
+  expect(input).toHaveValue("London");
+  expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+});
+
+test("escape closes the suggestion list", async () => {
+  render(<App />);
+  await screen.findByText(/London, GB - 20°C/);
+
+  const box = screen.getByRole("combobox");
+  await userEvent.type(box, "Londo");
+  await screen.findByRole("listbox");
+  fireEvent.keyDown(box, { key: "Escape" });
+  expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+});
+
+test("pins and unpins the current city as a favorite", async () => {
+  render(<App />);
+  await screen.findByText(/London, GB - 20°C/);
+
+  await userEvent.click(
+    screen.getByRole("button", { name: /add london to favorites/i })
+  );
+  expect(
+    screen.getByRole("button", { name: /show weather for favorite london/i })
+  ).toBeInTheDocument();
+  expect(JSON.parse(localStorage.getItem("favorites"))[0].name).toBe("London");
+
+  await userEvent.click(
+    screen.getByRole("button", { name: /remove london from favorites/i })
+  );
+  expect(
+    screen.queryByRole("button", { name: /show weather for favorite london/i })
+  ).not.toBeInTheDocument();
+});

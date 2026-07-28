@@ -19,6 +19,8 @@ export default function WeatherCard({
   lastUpdated,
   onRefresh,
   loading = false,
+  favorite = false,
+  onToggleFavorite,
 }) {
   return (
     <>
@@ -32,6 +34,27 @@ export default function WeatherCard({
       <h3>
         {data.city}, {data.country} -{" "}
         {displayTemperature(data.temperature, unit)}°{unit}
+        {data.lat != null && data.lon != null && onToggleFavorite && (
+          <button
+            type="button"
+            className="favorite-star"
+            aria-pressed={favorite}
+            aria-label={
+              favorite
+                ? `Remove ${data.city} from favorites`
+                : `Add ${data.city} to favorites`
+            }
+            onClick={() =>
+              onToggleFavorite({
+                name: data.city,
+                lat: data.lat,
+                lon: data.lon,
+              })
+            }
+          >
+            {favorite ? "★" : "☆"}
+          </button>
+        )}
       </h3>
       <div className="unit-toggle" role="group" aria-label="Temperature unit">
         <button
