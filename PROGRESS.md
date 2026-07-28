@@ -19,3 +19,5 @@ size: 65871
 size: 67401
 2026-07-28T04:37Z | it008 | authoring:E04 | 462a79a | authored E04 (32 items); buffer now 1 authored epic queued | gates:fmt,test(53),lint,build | smoke:n/a
 2026-07-28T18:34Z | it009 | E06-020..025,PRs | dd4f40f | merged 2 dependabot PRs, superseded 5 in one deps commit, CSS componentization, authored E09 | gates:fmt,test(53),lint,build | smoke:pending-ci
+2026-07-28T19:53Z | it010 | E06-024,BUG-003 | 9ef6fc6 | App.css split to styles/{base,components,themes}; INDEX regenerated from files (93 done) | gates:fmt,test(53),lint,build,audit(0),ci-green | smoke:pass size-check:67391-vs-67401-ok a11y:console-clean screenshots:refreshed
+size: 67391
