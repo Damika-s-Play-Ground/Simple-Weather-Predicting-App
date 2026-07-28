@@ -5,40 +5,152 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    # Nightly bit-rot check (deploy is push-gated, so this only tests).
+    - cron: "43 3 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUNDLE_BUDGET_GZIP_BYTES: 204800
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
-    # Needed so the GITHUB_TOKEN can push the built site to the gh-pages branch.
-    permissions:
-      contents: write
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
-        env:
-          CI: true
+      - name: Secret-leak guard
+        # A hardcoded OpenWeather key looks like appid=<32 hex>. Docs explain
+        # the pattern; only real source hits should fail.
+        run: |
+          if grep -rInE 'appid=[a-f0-9]{16,}' src/ index.html vite.config.js 2>/dev/null; then
+            echo "::error::Possible hardcoded API key found"; exit 1
+          fi
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Conventional commit subject (warn only)
+        if: github.event_name == 'push'
+        run: |
+          SUBJ="$(git log -1 --pretty=%s)"
+          if ! echo "$SUBJ" | grep -qE '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?!?: '; then
+            echo "::warning::Commit subject is not Conventional Commits: $SUBJ"
+          fi
+
+      - name: Run tests (with coverage)
+        run: npx vitest run --coverage
+
+      - name: Coverage summary
+        if: always()
+        run: |
+          if [ -f coverage/coverage-summary.json ]; then
+            node -e "
+              const s = require('./coverage/coverage-summary.json').total;
+              const rows = Object.entries(s).map(([k, v]) => \`| \${k} | \${v.pct}% |\`).join('\n');
+              console.log('### Coverage\n| Metric | % |\n| --- | --- |\n' + rows);
+            " >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Build
         run: npm run build
         env:
-          CI: true
           VITE_OWM_KEY: ${{ secrets.REACT_APP_OWM_KEY }}
 
+      - name: SPA 404 fallback
+        run: cp dist/index.html dist/404.html
+
+      - name: Bundle size report + budget
+        run: |
+          MAIN=$(ls dist/assets/index-*.js | head -1)
+          GZ=$(gzip -c "$MAIN" | wc -c | tr -d ' ')
+          echo "### Bundle\nMain JS: **${GZ} bytes gzip** (budget ${BUNDLE_BUDGET_GZIP_BYTES})" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$GZ" -gt "$BUNDLE_BUDGET_GZIP_BYTES" ]; then
+            echo "::error::Main bundle ${GZ} bytes gzip exceeds budget ${BUNDLE_BUDGET_GZIP_BYTES}"; exit 1
+          fi
+
+      - name: npm audit (prod, high+)
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: README link check (non-blocking)
+        continue-on-error: true
+        run: |
+          grep -oE 'https?://[^ )"<]+' README.md | sort -u | while read -r url; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 -L "$url" || echo 000)
+            case "$code" in
+              2*|3*) ;;
+              *) echo "::warning::README link $url returned $code" ;;
+            esac
+          done
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Skip for docs-only pushes
+        id: docs_only
+        run: |
+          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} 2>/dev/null || echo "src")
+          if [ -n "$CHANGED" ] && ! echo "$CHANGED" | grep -qvE '\.md$'; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Docs-only push; skipping deploy." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Download build artifact
+        if: steps.docs_only.outputs.skip != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
       - name: Deploy to GitHub Pages
-        # Publish to the gh-pages branch only on pushes to main (not PRs).
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: steps.docs_only.outputs.skip != 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+
+      - name: Health check (served hash matches build)
+        if: steps.docs_only.outputs.skip != 'true'
+        run: |
+          EXPECT=$(basename $(ls dist/assets/index-*.js | head -1))
+          URL="https://damika-s-play-ground.github.io/Simple-Weather-Predicting-App/"
+          for i in $(seq 1 10); do
+            if curl -fsSL "$URL" | grep -q "$EXPECT"; then
+              echo "Live site serves $EXPECT (attempt $i)"
+              echo "### Deployed\n$URL @ ${{ github.sha }} ($EXPECT)" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "::error::Live site never served $EXPECT"; exit 1

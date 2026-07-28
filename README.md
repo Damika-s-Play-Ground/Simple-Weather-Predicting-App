@@ -1,5 +1,10 @@
 <div align="center">
   <h1> Simple Weather Predicting App 🌦️ </h1>
+  <p>
+    <a href="https://github.com/Damika-s-Play-Ground/Simple-Weather-Predicting-App/actions/workflows/ci.yml"><img src="https://github.com/Damika-s-Play-Ground/Simple-Weather-Predicting-App/actions/workflows/ci.yml/badge.svg" alt="CI status"/></a>
+    <a href="https://damika-s-play-ground.github.io/Simple-Weather-Predicting-App/"><img src="https://img.shields.io/badge/live-GitHub%20Pages-4682b4" alt="Live site"/></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT license"/></a>
+  </p>
 </div>
 <p align="center">
   <img src="./asset/screenshot.png" alt="Simple Weather Predicting App — current conditions and 5-day forecast" width="640"/>

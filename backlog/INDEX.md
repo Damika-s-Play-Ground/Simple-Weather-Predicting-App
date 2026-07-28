@@ -8,7 +8,7 @@ Statuses: `ACTIVE` (being executed), `QUEUED (authored)` (file complete, waiting
 | Epic | File                    | Status              | Done/Total | Phase      | Notes                                |
 | ---- | ----------------------- | ------------------- | ---------- | ---------- | ------------------------------------ |
 | E00  | E00-bugs.md             | CONTINUOUS          | 0/0        | —          | Always drained first                 |
-| E01  | E01-ci-hardening.md     | ACTIVE              | 0/30       | M0         |                                      |
+| E01  | E01-ci-hardening.md     | DONE                | 30/30      | M0         |                                      |
 | E02  | E02-vite-migration.md   | QUEUED (unauthored) | 0/~40      | M0         | Staged, always-green                 |
 | E04  | E04-testing-infra.md    | QUEUED (unauthored) | 0/~90      | M0         | Vitest, RTL 16, MSW, Playwright      |
 | E06  | E06-design-system.md    | QUEUED (unauthored) | 0/~120     | M0–M1      | Tokens → CSS Modules → primitives    |
