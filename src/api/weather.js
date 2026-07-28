@@ -4,7 +4,7 @@ const BASE = "https://api.openweathermap.org/data/2.5";
 
 // True when an OpenWeather API key is available at build time.
 export const isWeatherApiConfigured = () =>
-  Boolean(process.env.REACT_APP_OWM_KEY);
+  Boolean(import.meta.env.VITE_OWM_KEY);
 
 // Map the OpenWeather "current weather" payload to the shape the UI needs.
 const buildCurrent = (data) => ({
@@ -64,7 +64,7 @@ export const buildHourlyForecast = (list) => {
 // Fetch current conditions and forecast in parallel for a query string
 // (either `q=<city>` or `lat=..&lon=..`). Returns { current, forecast, hourly }.
 export const fetchWeatherByQuery = async (query) => {
-  const API_KEY = process.env.REACT_APP_OWM_KEY;
+  const API_KEY = import.meta.env.VITE_OWM_KEY;
   const [weatherRes, forecastRes] = await Promise.all([
     axios.get(`${BASE}/weather?${query}&units=metric&appid=${API_KEY}`),
     axios.get(`${BASE}/forecast?${query}&units=metric&appid=${API_KEY}`),

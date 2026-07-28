@@ -2,8 +2,8 @@ import { renderHook, act, waitFor } from "@testing-library/react";
 import axios from "axios";
 import useWeather from "./useWeather";
 
-// axios ships ESM that CRA's Jest cannot transform; mock it.
-jest.mock("axios", () => ({ get: jest.fn() }));
+// Mock the network boundary.
+vi.mock("axios", () => ({ default: { get: vi.fn() } }));
 
 const forecastResponse = () => ({ data: { list: [] } });
 const weatherResponse = (name, country) => ({
@@ -17,9 +17,9 @@ const weatherResponse = (name, country) => ({
 });
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
   localStorage.clear();
-  process.env.REACT_APP_OWM_KEY = "test-key";
+  vi.stubEnv("VITE_OWM_KEY", "test-key");
 });
 
 test("ignores a stale response that resolves after a newer request", async () => {

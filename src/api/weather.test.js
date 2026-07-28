@@ -1,6 +1,5 @@
-// axios ships ESM that CRA's Jest cannot transform; mock it so importing the
-// module under test doesn't pull in the real package.
-jest.mock("axios", () => ({ get: jest.fn() }));
+// Mock the network boundary so importing the module under test is pure.
+vi.mock("axios", () => ({ default: { get: vi.fn() } }));
 
 import { buildDailyForecast, buildHourlyForecast } from "./weather";
 

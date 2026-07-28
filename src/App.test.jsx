@@ -3,14 +3,10 @@ import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import App from "./App";
 
-// axios ships ESM that CRA's Jest cannot transform, and App fetches on mount.
-// Mock it so the suite runs without a real network call.
-jest.mock("axios", () => ({
-  get: jest.fn(),
+// App fetches on mount; mock axios so the suite runs without network.
+vi.mock("axios", () => ({
+  default: { get: vi.fn() },
 }));
-
-// react-gauge-chart pulls in d3 (ESM), which CRA's Jest cannot transform.
-jest.mock("react-gauge-chart", () => () => <div data-testid="gauge" />);
 
 // Build responses shaped like the OpenWeather current-weather and forecast APIs.
 const weatherResponse = (name, country) => ({
@@ -49,11 +45,11 @@ const routeByUrl = (url) => {
 };
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
   localStorage.clear();
   // The guard in useWeather needs a key present for the normal-path tests;
   // CI runs `npm test` without one, so set a stub here.
-  process.env.REACT_APP_OWM_KEY = "test-key";
+  vi.stubEnv("VITE_OWM_KEY", "test-key");
   axios.get.mockImplementation(routeByUrl);
 });
 
@@ -85,7 +81,7 @@ test("searches for a typed city and shows its weather", async () => {
 });
 
 test("shows a configuration message when the API key is missing", async () => {
-  delete process.env.REACT_APP_OWM_KEY;
+  vi.stubEnv("VITE_OWM_KEY", "");
   render(<App />);
 
   const alert = await screen.findByRole("alert");

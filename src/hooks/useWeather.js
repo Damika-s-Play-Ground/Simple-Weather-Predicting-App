@@ -55,7 +55,7 @@ export default function useWeather(defaultCity = "London") {
   const loadByQuery = async (query, notFoundMessage) => {
     if (!isWeatherApiConfigured()) {
       setError(
-        "Weather service is not configured: the REACT_APP_OWM_KEY environment variable is missing. See the README for setup."
+        "Weather service is not configured: the VITE_OWM_KEY environment variable is missing. See the README for setup."
       );
       setForecast([]);
       setHourly([]);

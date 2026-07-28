@@ -33,7 +33,7 @@ jobs:
         run: npm run build
         env:
           CI: true
-          REACT_APP_OWM_KEY: ${{ secrets.REACT_APP_OWM_KEY }}
+          VITE_OWM_KEY: ${{ secrets.REACT_APP_OWM_KEY }}
 
       - name: Deploy to GitHub Pages
         # Publish to the gh-pages branch only on pushes to main (not PRs).
@@ -41,4 +41,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./dist

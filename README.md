@@ -38,10 +38,11 @@ This is a simple weather predicting app built using React.js. It allows users to
 
 ## Tech Stack
 
-- React.js
+- React 18 + Vite
+- Vitest + React Testing Library
 - Axios
 - OpenWeather API
-- GitHub Pages for deployment
+- GitHub Pages (CI auto-deploy)
 
 ---
 
@@ -74,21 +75,21 @@ example file and add your own key:
 cp .env.example .env
 ```
 
-Then edit `.env` and set `REACT_APP_OWM_KEY` to a key from
+Then edit `.env` and set `VITE_OWM_KEY` to a key from
 [OpenWeather](https://home.openweathermap.org/api_keys). `.env` is gitignored so
 your key is never committed.
 
 > ⚠️ **Security note:** an OpenWeather key was previously hardcoded in the source
 > and pushed to this public repo. That key is compromised and **must be rotated** —
 > generate a new one and revoke the old key in your OpenWeather dashboard. Also
-> note that Create React App inlines `REACT_APP_*` values into the client bundle
+> note that Vite inlines `VITE_*` values into the client bundle
 > at build time, so any key shipped to the browser is inherently public; use a
 > restricted free-tier key.
 
 Start the development server
 
 ```bash
-npm start
+npm run dev
 ```
 
 ## Deployment
@@ -100,8 +101,7 @@ the current `main`:
 npm run deploy
 ```
 
-This builds the app and pushes `build/` to `gh-pages`. The live site is served at
-the `homepage` URL in `package.json`:
+This builds the app and pushes `dist/` to `gh-pages`. The live site:
 https://Damika-s-Play-Ground.github.io/Simple-Weather-Predicting-App/
 
 ### Continuous deployment
@@ -109,7 +109,7 @@ https://Damika-s-Play-Ground.github.io/Simple-Weather-Predicting-App/
 Pushes to `main` also trigger `.github/workflows/ci.yml`, which runs the tests
 and build and then auto-publishes to the `gh-pages` branch — so the live site
 stays up to date without a manual `npm run deploy`. The build reads the
-`REACT_APP_OWM_KEY` **repository secret** (Settings → Secrets and variables →
+`REACT_APP_OWM_KEY` **repository secret** (mapped to `VITE_OWM_KEY` at build time) (Settings → Secrets and variables →
 Actions).
 
 ## Contributing

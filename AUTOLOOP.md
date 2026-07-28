@@ -62,7 +62,7 @@ dependencies, `.github/workflows/`, or build config rides ALONE.
 
 1. Implement each item with its tests written alongside.
 2. **Gates (blocking, every firing):**
-   `npx prettier --write .` → `CI=true npm test` → `CI=true npm run build`.
+   `npx prettier --write .` → `npm test` (vitest run) → `npm run lint` → `npm run build`.
 3. Record: flip `[ ]`→`[x]` in the epic file (no prose notes), bump the
    INDEX.md counter, append one ledger line per item (§4).
 4. Commit per logical item — Conventional Commits + trailer
@@ -88,13 +88,13 @@ dependencies, `.github/workflows/`, or build config rides ALONE.
 
 ### 3.1 Every firing (blocking)
 
-prettier --write (then clean), full test suite, `CI=true` production build.
+prettier --write (then clean), `npm test`, `npm run lint`, `npm run build`.
 
 ### 3.2 Cadence (on the derived iteration counter)
 
 | When `it % N == 0` | Gate                                                                                                                                                    | On failure                     |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| 5                  | Live smoke (§3.3); gzip size of main JS bundle vs last `size:` ledger entry — >10% unexplained growth                                                   | File `BUG-` item in E00        |
+| 5                  | Live smoke (§3.3); gzip size of main JS bundle (dist/assets/index-\*.js) vs last `size:` ledger entry — >10% unexplained growth                         | File `BUG-` item in E00        |
 | 10                 | `npm audit --omit=dev` (high/critical); a11y spot-check of live page; refresh `asset/` screenshots                                                      | File items in E00/E05/E11 lane |
 | 24                 | Push a notification to the user: iteration count, cron-expiry countdown, restart one-liner                                                              | —                              |
 | 25                 | AUDIT firing (no feature work): Lighthouse pass, dead-code scan, INDEX-vs-reality count check, re-audit whole app, author new items into E00/audit lane | —                              |

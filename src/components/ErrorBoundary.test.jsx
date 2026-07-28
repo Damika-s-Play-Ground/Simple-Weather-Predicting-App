@@ -16,7 +16,7 @@ test("renders children when there is no error", () => {
 
 test("renders a fallback when a child throws", () => {
   // React logs the caught error; silence it to keep the test output clean.
-  const spy = jest.spyOn(console, "error").mockImplementation(() => {});
+  const spy = vi.spyOn(console, "error").mockImplementation(() => {});
 
   render(
     <ErrorBoundary>

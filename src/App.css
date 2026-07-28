@@ -125,6 +125,19 @@ form {
 
 /* ... (existing CSS rules) */
 
+/* SVG temperature gauge */
+.gauge {
+  width: 45%;
+  max-width: 220px;
+  margin: 6px auto;
+}
+
+.gauge-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* Last-updated row + refresh */
 .updated-row {
   display: flex;
