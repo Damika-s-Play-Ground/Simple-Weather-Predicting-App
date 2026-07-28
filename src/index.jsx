@@ -2,7 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/tokens.css";
 import "./index.css";
-import "./App.css";
+import "./styles/base.css";
+import "./styles/components.css";
+import "./styles/themes.css";
 import App from "./App";
 import ErrorBoundary from "./components/ErrorBoundary";
 

@@ -1,0 +1,94 @@
+/* Base: resets, a11y utilities, page layout. */
+/* Visually hide content while keeping it available to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Visible keyboard focus indicator for interactive elements */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Main layout */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  max-width: 100%;
+  margin: auto;
+  padding: 24px 12px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background: linear-gradient(
+    to bottom,
+    var(--page-gradient-from),
+    var(--page-gradient-to)
+  );
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+input {
+  padding: 10px;
+  font-size: var(--text-xl);
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+input:focus {
+  box-shadow: var(--shadow-2);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  background: none;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Small-screen tweaks */
+@media (max-width: 600px) {
+  form {
+    margin: 12px;
+  }
+
+  input,
+  button {
+    font-size: var(--text-lg);
+  }
+
+  .weather-section {
+    width: 100%;
+  }
+
+  .weather-section h3 {
+    font-size: 1.2em;
+  }
+}

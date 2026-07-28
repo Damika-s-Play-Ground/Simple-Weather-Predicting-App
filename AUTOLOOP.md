@@ -64,7 +64,8 @@ dependencies, `.github/workflows/`, or build config rides ALONE.
 2. **Gates (blocking, every firing):**
    `npx prettier --write .` → `npm test` (vitest run) → `npm run lint` → `npm run build`.
 3. Record: flip `[ ]`→`[x]` in the epic file (no prose notes), bump the
-   INDEX.md counter, append one ledger line per item (§4).
+   INDEX.md counter, append one ledger line per item (§4). Every INDEX/epic
+   edit must be verified with a grep assert — silent misses caused BUG-003.
 4. Commit per logical item — Conventional Commits + trailer
    `Backlog: E05-012` (S-sweeps may share one commit listing all IDs).
    The firing's last commit includes the backlog/ledger updates.

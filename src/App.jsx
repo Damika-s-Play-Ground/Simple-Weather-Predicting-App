@@ -1,4 +1,3 @@
-import "./App.css";
 import { useState, useEffect } from "react";
 import useWeather from "./hooks/useWeather";
 import useTheme from "./hooks/useTheme";
