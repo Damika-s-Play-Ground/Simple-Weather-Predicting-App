@@ -15,3 +15,5 @@ size: 65871
 2026-07-28T04:15Z | it005 | E21-001..008 | 3b1dbfd | tri-state dark mode, dark sky variants, no-flash | gates:fmt,test(41),lint,build | smoke:pending-ci
 2026-07-28T04:28Z | it006 | BUG-001,BUG-002 | 001f66f | artifact actions bump, footer flow fix | gates:fmt,test(41),lint,build | smoke:n/a
 2026-07-28T04:28Z | it007 | E10-001..023 | b83a62b | geocoding autocomplete combobox + favorites | gates:fmt,test(53),lint,build | smoke:pending-ci
+2026-07-28T04:30Z | it007 | smoke | 6a39810 | live smoke: autocomplete+favorites verified on prod, screenshots refreshed | gates:ci-green | smoke:pass
+size: 67401

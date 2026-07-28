@@ -20,11 +20,13 @@ This is a simple weather predicting app built using React.js. It allows users to
 
 ## Features
 
-- **Search by City**: Look up the current weather in any city.
+- **Search by City**: Look up the current weather in any city, with debounced autocomplete suggestions (keyboard-navigable).
 - **Use My Location**: One-tap weather for your current position via the Geolocation API.
-- **Recent Searches**: Recently viewed cities are saved (localStorage) as quick-access chips.
+- **Favorites & Recent Searches**: Pin favorite cities (star on the card) and revisit recent ones via quick-access chips (localStorage).
 - **5-Day Forecast**: Daily high/low cards summarising the days ahead.
-- **°C / °F Toggle**: Switch temperature units instantly without re-fetching.
+- **°C / °F Toggle**: Switch temperature units instantly without re-fetching (wind follows: m/s ↔ mph).
+- **Dark Mode**: System-aware tri-state theme (auto/light/dark) with no-flash boot and a persisted preference.
+- **Hourly Forecast**: Next 24 hours in 3-hour steps with precipitation probability.
 - **Dynamic Backgrounds**: Themed backgrounds for clear, clouds, rain, drizzle, snow, thunderstorm and mist/fog, with a sensible default.
 - **Weather Icons**: Visual representations of the current weather.
 - **Gauge Meter**: A gauge meter showing the temperature range.
