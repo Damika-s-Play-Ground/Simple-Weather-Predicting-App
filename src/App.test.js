@@ -28,9 +28,11 @@ const forecastResponse = () => ({
   data: {
     list: [
       {
+        dt: 1753704000, // 12:00 UTC
         dt_txt: "2026-07-28 12:00:00",
-        main: { temp_min: 15, temp_max: 22 },
+        main: { temp: 21, temp_min: 15, temp_max: 22 },
         weather: [{ icon: "01d", description: "clear sky" }],
+        pop: 0.4,
       },
     ],
   },
@@ -96,6 +98,15 @@ test("shows an inline error when the lookup fails", async () => {
 
   const alert = await screen.findByRole("alert");
   expect(alert).toHaveTextContent(/could not find weather/i);
+});
+
+test("shows the hourly strip with temperature and precipitation chance", async () => {
+  render(<App />);
+  await screen.findByText(/London, GB - 20°C/);
+
+  expect(screen.getByText("Next 24 Hours")).toBeInTheDocument();
+  expect(screen.getByText("21°")).toBeInTheDocument(); // hourly slot temp
+  expect(screen.getByText(/💧40%/)).toBeInTheDocument(); // pop 0.4
 });
 
 test("restores the saved unit preference from localStorage", async () => {

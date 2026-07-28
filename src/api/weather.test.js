@@ -2,7 +2,7 @@
 // module under test doesn't pull in the real package.
 jest.mock("axios", () => ({ get: jest.fn() }));
 
-import { buildDailyForecast } from "./weather";
+import { buildDailyForecast, buildHourlyForecast } from "./weather";
 
 const entry = (dt_txt, temp_min, temp_max, icon, description) => ({
   dt_txt,
@@ -43,5 +43,43 @@ describe("buildDailyForecast", () => {
       entry(`2026-08-0${i + 1} 12:00:00`, i, i + 5, "01d", "clear sky")
     );
     expect(buildDailyForecast(list)).toHaveLength(5);
+  });
+});
+
+const hourlyEntry = (dt, temp, pop) => ({
+  dt,
+  main: { temp },
+  weather: [{ icon: "01d", description: "clear sky" }],
+  ...(pop != null && { pop }),
+});
+
+describe("buildHourlyForecast", () => {
+  it("returns an empty array when given a non-array", () => {
+    expect(buildHourlyForecast(undefined)).toEqual([]);
+    expect(buildHourlyForecast(null)).toEqual([]);
+  });
+
+  it("maps time, temp, icon, description, and pop", () => {
+    const hours = buildHourlyForecast([hourlyEntry(1753704000, 21.4, 0.4)]);
+    expect(hours).toEqual([
+      {
+        time: 1753704000,
+        temp: 21.4,
+        icon: "01d",
+        description: "clear sky",
+        pop: 0.4,
+      },
+    ]);
+  });
+
+  it("defaults a missing pop to 0", () => {
+    expect(buildHourlyForecast([hourlyEntry(1753704000, 20)])[0].pop).toBe(0);
+  });
+
+  it("caps the result at 8 slots (24 hours)", () => {
+    const list = Array.from({ length: 12 }, (_, i) =>
+      hourlyEntry(1753704000 + i * 10800, 20, 0)
+    );
+    expect(buildHourlyForecast(list)).toHaveLength(8);
   });
 });

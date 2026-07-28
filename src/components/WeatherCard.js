@@ -13,6 +13,7 @@ import {
 export default function WeatherCard({
   data,
   forecast,
+  hourly = [],
   unit,
   onUnitChange,
   lastUpdated,
@@ -67,6 +68,40 @@ export default function WeatherCard({
           Sunrise: {formatTime(data.sunrise, data.timezone)} · Sunset:{" "}
           {formatTime(data.sunset, data.timezone)}
         </p>
+      )}
+
+      {hourly.length > 0 && (
+        <div className="hourly">
+          <h4 className="forecast-title">Next 24 Hours</h4>
+          <div className="hourly-list" aria-label="Hourly forecast">
+            {hourly.map((h) => (
+              <div className="hourly-slot" key={h.time}>
+                <span className="hourly-time">
+                  {formatTime(h.time, data.timezone)}
+                </span>
+                <img
+                  className="forecast-icon"
+                  src={`https://openweathermap.org/img/wn/${h.icon}.png`}
+                  alt={h.description}
+                />
+                <span className="hourly-temp">
+                  {displayTemperature(h.temp, unit)}°
+                </span>
+                <span
+                  className="hourly-pop"
+                  title="Chance of precipitation"
+                  aria-label={
+                    h.pop >= 0.05
+                      ? `${Math.round(h.pop * 100)}% chance of precipitation`
+                      : undefined
+                  }
+                >
+                  {h.pop >= 0.05 ? `💧${Math.round(h.pop * 100)}%` : " "}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
 
       {forecast.length > 0 && (

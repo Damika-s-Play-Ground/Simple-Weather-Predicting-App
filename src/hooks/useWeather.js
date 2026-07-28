@@ -6,6 +6,7 @@ import { fetchWeatherByQuery, isWeatherApiConfigured } from "../api/weather";
 export default function useWeather(defaultCity = "London") {
   const [current, setCurrent] = useState(null);
   const [forecast, setForecast] = useState([]);
+  const [hourly, setHourly] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [recentSearches, setRecentSearches] = useState(() => {
@@ -57,6 +58,7 @@ export default function useWeather(defaultCity = "London") {
         "Weather service is not configured: the REACT_APP_OWM_KEY environment variable is missing. See the README for setup."
       );
       setForecast([]);
+      setHourly([]);
       return;
     }
 
@@ -67,17 +69,22 @@ export default function useWeather(defaultCity = "London") {
     setLoading(true);
     setError("");
     try {
-      const { current: data, forecast: days } =
-        await fetchWeatherByQuery(query);
+      const {
+        current: data,
+        forecast: days,
+        hourly: hours,
+      } = await fetchWeatherByQuery(query);
       if (isStale()) return; // A newer request superseded this one.
       setCurrent(data);
       setForecast(days);
+      setHourly(hours);
       setLastUpdated(Date.now());
       addRecentSearch(data.city);
     } catch (err) {
       if (isStale()) return;
       setError(notFoundMessage);
       setForecast([]);
+      setHourly([]);
       console.log(err);
     } finally {
       if (!isStale()) setLoading(false);
@@ -136,6 +143,7 @@ export default function useWeather(defaultCity = "London") {
   return {
     current,
     forecast,
+    hourly,
     loading,
     error,
     recentSearches,

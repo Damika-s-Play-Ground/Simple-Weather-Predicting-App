@@ -47,8 +47,22 @@ export const buildDailyForecast = (list) => {
   return Object.values(days).slice(0, 5);
 };
 
+// The next 24 hours as up to eight 3-hour steps straight from the forecast
+// list: time (unix UTC seconds), temp, icon, description, and precipitation
+// probability (pop, 0..1).
+export const buildHourlyForecast = (list) => {
+  if (!Array.isArray(list)) return [];
+  return list.slice(0, 8).map((item) => ({
+    time: item.dt,
+    temp: item.main.temp,
+    icon: item.weather[0].icon,
+    description: item.weather[0].description,
+    pop: item.pop || 0,
+  }));
+};
+
 // Fetch current conditions and forecast in parallel for a query string
-// (either `q=<city>` or `lat=..&lon=..`). Returns { current, forecast }.
+// (either `q=<city>` or `lat=..&lon=..`). Returns { current, forecast, hourly }.
 export const fetchWeatherByQuery = async (query) => {
   const API_KEY = process.env.REACT_APP_OWM_KEY;
   const [weatherRes, forecastRes] = await Promise.all([
@@ -58,5 +72,6 @@ export const fetchWeatherByQuery = async (query) => {
   return {
     current: buildCurrent(weatherRes.data),
     forecast: buildDailyForecast(forecastRes.data.list),
+    hourly: buildHourlyForecast(forecastRes.data.list),
   };
 };

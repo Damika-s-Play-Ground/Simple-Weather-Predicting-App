@@ -49,7 +49,7 @@ Added after the seed backlog was completed — re-audit of remaining worthwhile 
 
 Added after round 2 — further re-audit.
 
-- [x] Show a clear "missing API key" message when REACT_APP_OWM_KEY is not configured, instead of a misleading "city not found" error. _Added isWeatherApiConfigured() and a guard in loadByQuery that surfaces a clear config error instead of fetching; tests set a stub key in beforeEach and a new test asserts the message when the key is deleted._
+- [x] Show a clear "missing API key" message when REACT*APP_OWM_KEY is not configured, instead of a misleading "city not found" error. \_Added isWeatherApiConfigured() and a guard in loadByQuery that surfaces a clear config error instead of fetching; tests set a stub key in beforeEach and a new test asserts the message when the key is deleted.*
 - [x] Disable the Search/location buttons while a request is in flight. _SearchForm now takes a loading prop: the Search button shows "Searching…" and is disabled, the location button and recent chips are disabled, and submit (incl. Enter) is ignored while loading; the stale-response guard moved to a hook-level test (src/hooks/useWeather.test.js)._
 - [x] Replace the default CRA favicon/manifest/title with weather-app branding. _Added a weather-themed public/favicon.svg (sun + cloud) referenced from index.html, updated the meta description + theme-color to the app blue, and rebranded manifest.json (short_name/name/icons/colors). Title was already "Weather App"._
 - [x] Add app screenshots to the README. _Captured fresh desktop + mobile screenshots of the live app (headless browser) into asset/screenshot.png and asset/screenshot-mobile.png; replaced the outdated preview at the top and added a Screenshots section._
@@ -57,3 +57,14 @@ Added after round 2 — further re-audit.
 - [x] Remove unused dependencies (bootstrap, react-bootstrap). _Neither was imported anywhere in src/ or public/; removed both from package.json to shrink the install and dependency surface. Build + all 25 tests still pass._
 - [x] Add a React error boundary so a render-time exception shows a friendly fallback instead of a blank screen. _Added src/components/ErrorBoundary.js wrapping <App/> in index.js, with a role="alert" fallback + Reload button; covered by 2 tests (renders children normally, shows fallback when a child throws)._
 - [x] Make wind units follow the °C/°F toggle (m/s for metric, mph for imperial). _Added displayWindSpeed + windUnitLabel helpers (m/s ↔ mph) used by WeatherCard; covered by unit tests and an assertion that F-mode shows "6.7 mph"._
+
+## Next level (round 4)
+
+Bigger user-facing features, requested after rounds 1–3 completed.
+
+- [x] Hourly forecast strip: next 24 hours in 3-hour steps with temperature, icon, and precipitation probability. _Added buildHourlyForecast (first 8 forecast entries → time/temp/icon/pop) surfaced through useWeather; WeatherCard renders a scrollable "Next 24 Hours" strip with location-local times, unit-aware temps, and a 💧pop% badge when ≥5%. 5 new tests (35 total)._
+- [ ] City autocomplete: debounced suggestions via the OpenWeather Geocoding API, keyboard-navigable.
+- [ ] Dark mode: follow prefers-color-scheme with a manual toggle, persisted in localStorage.
+- [ ] Favorite cities: pin/unpin the current city and quick-switch via favorite chips.
+- [ ] Air quality card: AQI + main pollutants from the OpenWeather Air Pollution API.
+- [ ] Offline resilience: cache the last successful weather in localStorage for instant paint and a stale-data banner when offline.

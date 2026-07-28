@@ -11,6 +11,7 @@ function App() {
   const {
     current,
     forecast,
+    hourly,
     loading,
     error,
     recentSearches,
@@ -72,6 +73,7 @@ function App() {
           <WeatherCard
             data={current}
             forecast={forecast}
+            hourly={hourly}
             unit={unit}
             onUnitChange={setUnit}
             lastUpdated={lastUpdated}
