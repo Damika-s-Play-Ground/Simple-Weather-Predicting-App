@@ -1,5 +1,11 @@
 # Roadmap — auto/level-up
 
+> **FROZEN (2026-07-28):** this roadmap is superseded by the `backlog/` epic
+> system — see `AUTOLOOP.md` for the loop protocol and `backlog/INDEX.md` for
+> active work. The five open round-4 items below migrated to epics
+> E10 (autocomplete, favorites), E21 (dark mode), E12 (air quality), and
+> E08 (offline). This file is kept as the historical record of iterations 1–33.
+
 Incremental improvements to the Create React App weather app. One focused item per iteration.
 
 ## Correctness & security
@@ -63,8 +69,8 @@ Added after round 2 — further re-audit.
 Bigger user-facing features, requested after rounds 1–3 completed.
 
 - [x] Hourly forecast strip: next 24 hours in 3-hour steps with temperature, icon, and precipitation probability. _Added buildHourlyForecast (first 8 forecast entries → time/temp/icon/pop) surfaced through useWeather; WeatherCard renders a scrollable "Next 24 Hours" strip with location-local times, unit-aware temps, and a 💧pop% badge when ≥5%. 5 new tests (35 total)._
-- [ ] City autocomplete: debounced suggestions via the OpenWeather Geocoding API, keyboard-navigable.
-- [ ] Dark mode: follow prefers-color-scheme with a manual toggle, persisted in localStorage.
-- [ ] Favorite cities: pin/unpin the current city and quick-switch via favorite chips.
-- [ ] Air quality card: AQI + main pollutants from the OpenWeather Air Pollution API.
-- [ ] Offline resilience: cache the last successful weather in localStorage for instant paint and a stale-data banner when offline.
+- [ ] City autocomplete: debounced suggestions via the OpenWeather Geocoding API, keyboard-navigable. _(migrated to E10)_
+- [ ] Dark mode: follow prefers-color-scheme with a manual toggle, persisted in localStorage. _(migrated to E21)_
+- [ ] Favorite cities: pin/unpin the current city and quick-switch via favorite chips. _(migrated to E10)_
+- [ ] Air quality card: AQI + main pollutants from the OpenWeather Air Pollution API. _(migrated to E12)_
+- [ ] Offline resilience: cache the last successful weather in localStorage for instant paint and a stale-data banner when offline. _(migrated to E08)_
