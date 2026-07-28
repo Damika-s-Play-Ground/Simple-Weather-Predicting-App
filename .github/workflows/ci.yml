@@ -128,7 +128,7 @@ jobs:
 
       - name: Download build artifact
         if: steps.docs_only.outputs.skip != 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist
