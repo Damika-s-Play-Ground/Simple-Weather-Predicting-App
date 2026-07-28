@@ -81,6 +81,10 @@
   --shadow-card: 0px 4px 10px rgba(0, 0, 0, 0.1);
   --shadow-icon: 0px 0px 10px rgba(0, 0, 0, 0.5);
 
+  /* --- Icon sizes --- */
+  --icon-sm: 40px;
+  --icon-md: 50px;
+
   /* --- Type scale --- */
   --text-xs: 11px;
   --text-sm: 12px;

@@ -23,9 +23,9 @@ properties (no Tailwind — keeps diffs granular).
 
 ## Componentization (later batches)
 
-- [ ] [E06-020] (M) Extract `Chip` styles into a shared `.chip` block used by recents + clear — AC: one chip class, two modifiers.
-- [ ] [E06-021] (M) Extract `.card` surface block shared by weather section + future cards — AC: weather-section composes `.card`.
-- [ ] [E06-022] (S) Extract `.btn` base + `.btn-primary/.btn-muted/.btn-ghost` modifiers — AC: all buttons compose `.btn`.
-- [ ] [E06-023] (S) Normalize icon sizes via `--icon-sm/md/lg` — AC: img sizing uses tokens.
-- [ ] [E06-024] (M) Split App.css into `styles/base.css`, `styles/components.css`, `styles/themes.css` — AC: App.css deleted, imports ordered.
-- [ ] [E06-025] (S) Document the token system in `docs/design-tokens.md` — AC: every token listed with purpose.
+- [x] [E06-020] (M) Extract `Chip` styles into a shared `.chip` block used by recents + clear — AC: one chip class, two modifiers.
+- [x] [E06-021] (M) Extract `.card` surface block shared by weather section + future cards — AC: weather-section composes `.card`.
+- [x] [E06-022] (S) Extract `.btn` base + `.btn-primary/.btn-muted/.btn-ghost` modifiers — AC: all buttons compose `.btn`.
+- [x] [E06-023] (S) Normalize icon sizes via `--icon-sm/md/lg` — AC: img sizing uses tokens.
+- [ ] [E06-024] (M) [deferred: next E06 batch] Split App.css into `styles/base.css`, `styles/components.css`, `styles/themes.css` — AC: App.css deleted, imports ordered.
+- [x] [E06-025] (S) Document the token system in `docs/design-tokens.md` — AC: every token listed with purpose.

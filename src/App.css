@@ -65,23 +65,46 @@ input:focus {
 }
 
 button {
-  padding: 10px 20px;
-  font-size: var(--text-xl);
   cursor: pointer;
-  background-color: var(--accent);
-  color: var(--accent-contrast);
   border: none;
-  border-radius: var(--radius-lg);
+  font-family: inherit;
+  background: none;
   transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: var(--accent-hover);
 }
 
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.btn {
+  padding: 10px var(--space-5);
+  font-size: var(--text-xl);
+  border-radius: var(--radius-lg);
+}
+
+.btn-sm {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-md);
+  border-radius: var(--radius-md);
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-muted {
+  background-color: var(--muted-action);
+  color: var(--accent-contrast);
+}
+
+.btn-muted:hover {
+  background-color: var(--muted-action-hover);
 }
 
 /* Weather section */
@@ -140,18 +163,6 @@ button:disabled {
 .updated-time {
   font-size: var(--text-sm);
   color: var(--text-secondary);
-}
-
-.refresh-button {
-  padding: 6px 12px;
-  font-size: var(--text-md);
-  background-color: var(--accent);
-  color: var(--text-inverse);
-  border-radius: var(--radius-md);
-}
-
-.refresh-button:hover {
-  background-color: var(--accent-hover);
 }
 
 /* Hourly forecast strip */
@@ -224,8 +235,8 @@ button:disabled {
 }
 
 .forecast-icon {
-  width: 40px;
-  height: 40px;
+  width: var(--icon-sm);
+  height: var(--icon-sm);
 }
 
 .forecast-temp {
@@ -298,38 +309,29 @@ button:disabled {
   font-weight: 500;
 }
 
-.recent-chip {
-  padding: 4px 10px;
+.chip {
+  padding: var(--space-1) 10px;
   font-size: var(--text-md);
-  background-color: var(--surface-chip);
-  color: var(--text-primary);
   border-radius: var(--radius-pill);
 }
 
-.recent-chip:hover {
+.chip--solid {
   background-color: var(--surface-chip);
+  color: var(--text-primary);
 }
 
-.recent-clear {
-  padding: 4px 10px;
-  font-size: var(--text-md);
+.chip--solid:hover {
+  background-color: var(--surface-solid);
+}
+
+.chip--ghost {
   background-color: transparent;
   color: var(--text-inverse);
   border: 1px solid var(--border-inverse);
-  border-radius: var(--radius-pill);
 }
 
-.recent-clear:hover {
+.chip--ghost:hover {
   background-color: var(--surface-raised);
-}
-
-/* Use-my-location button */
-.location-button {
-  background-color: var(--muted-action);
-}
-
-.location-button:hover {
-  background-color: var(--muted-action-hover);
 }
 
 /* Temperature unit toggle */
@@ -514,12 +516,12 @@ button:disabled {
 }
 
 .weather-icon {
-  border-radius: 50%; /* Makes the image round */
-  border: 4px solid var(--gray-0); /* Adds a white border */
+  border-radius: 50%;
+  border: 4px solid var(--gray-0);
   box-shadow: var(--shadow-icon);
-  width: 50px; /* Sets width */
-  height: 50px; /* Sets height */
-  object-fit: cover; /* Ensures the image covers the whole area */
+  width: var(--icon-md);
+  height: var(--icon-md);
+  object-fit: cover;
 }
 
 .app-footer {
@@ -574,8 +576,8 @@ button:disabled {
 }
 
 .skeleton-icon {
-  width: 50px;
-  height: 50px;
+  width: var(--icon-md);
+  height: var(--icon-md);
   border-radius: 50%;
 }
 

@@ -68,7 +68,7 @@ function App() {
         favorites={favorites}
         loading={loading}
       />
-      <section className="weather-section" aria-live="polite">
+      <section className="weather-section card" aria-live="polite">
         {error && (
           <p className="error-message" role="alert">
             {error}

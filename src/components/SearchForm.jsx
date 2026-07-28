@@ -144,12 +144,12 @@ export default function SearchForm({
             </ul>
           )}
         </div>
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? "Searching…" : "Search"}
         </button>
         <button
           type="button"
-          className="location-button"
+          className="btn btn-muted"
           onClick={onUseLocation}
           disabled={loading}
         >
@@ -165,7 +165,7 @@ export default function SearchForm({
             <button
               key={`${fav.lat},${fav.lon}`}
               type="button"
-              className="recent-chip"
+              className="chip chip--solid"
               aria-label={`Show weather for favorite ${fav.name}`}
               onClick={() => onSearchCoords(fav.lat, fav.lon, fav.name)}
               disabled={loading}
@@ -182,7 +182,7 @@ export default function SearchForm({
             <button
               key={city}
               type="button"
-              className="recent-chip"
+              className="chip chip--solid"
               aria-label={`Show weather for ${city}`}
               onClick={() => onSearch(city)}
               disabled={loading}
@@ -192,7 +192,7 @@ export default function SearchForm({
           ))}
           <button
             type="button"
-            className="recent-clear"
+            className="chip chip--ghost"
             aria-label="Clear recent searches"
             onClick={onClearRecent}
           >

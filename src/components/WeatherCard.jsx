@@ -157,7 +157,7 @@ export default function WeatherCard({
         )}
         <button
           type="button"
-          className="refresh-button"
+          className="btn btn-primary btn-sm"
           onClick={onRefresh}
           disabled={loading}
           aria-label="Refresh weather"
