@@ -12,9 +12,26 @@
     />
     <link rel="apple-touch-icon" href="/Simple-Weather-Predicting-App/logo192.png" />
     <link rel="manifest" href="/Simple-Weather-Predicting-App/manifest.json" />
+    <script>
+      // Apply the persisted theme before first paint to avoid a flash.
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          var r =
+            t === "light" || t === "dark"
+              ? t
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.dataset.theme = r;
+        } catch (e) {
+          /* default to light */
+        }
+      })();
+    </script>
     <title>Weather App</title>
-    <script type="module" crossorigin src="/Simple-Weather-Predicting-App/assets/index-Bg4Zu076.js"></script>
-    <link rel="stylesheet" crossorigin href="/Simple-Weather-Predicting-App/assets/index-V3DYoAon.css">
+    <script type="module" crossorigin src="/Simple-Weather-Predicting-App/assets/index-BCiyY_w2.js"></script>
+    <link rel="stylesheet" crossorigin href="/Simple-Weather-Predicting-App/assets/index-0qBDUWpE.css">
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
