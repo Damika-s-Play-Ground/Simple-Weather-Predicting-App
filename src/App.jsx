@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import useWeather from "./hooks/useWeather";
+import useTheme from "./hooks/useTheme";
 import { getWeatherBackground } from "./utils/format";
 import SearchForm from "./components/SearchForm";
 import WeatherCard from "./components/WeatherCard";
@@ -38,10 +39,23 @@ function App() {
     }
   }, [unit]);
 
+  const { theme, cycleTheme } = useTheme();
+  const themeLabel = { system: "🖥️ Auto", light: "☀️ Light", dark: "🌙 Dark" }[
+    theme
+  ];
+
   const backgroundClass = getWeatherBackground(current?.weatherDescription);
 
   return (
     <main className={backgroundClass}>
+      <button
+        type="button"
+        className="theme-toggle"
+        onClick={cycleTheme}
+        aria-label={`Theme: ${theme}. Activate to change.`}
+      >
+        {themeLabel}
+      </button>
       <SearchForm
         onSearch={searchCity}
         onUseLocation={useMyLocation}

@@ -592,3 +592,60 @@ button:disabled {
     font-size: 1.2em;
   }
 }
+
+/* Dark-mode sky variants: static, calmer gradients (animations disabled). */
+[data-theme="dark"] .clear-sky,
+[data-theme="dark"] .cloudy-sky,
+[data-theme="dark"] .rainy-sky,
+[data-theme="dark"] .thunderstorm-sky,
+[data-theme="dark"] .snowy-sky,
+[data-theme="dark"] .drizzle-sky,
+[data-theme="dark"] .misty-sky {
+  animation: none;
+}
+
+[data-theme="dark"] .clear-sky {
+  background: linear-gradient(180deg, #10222f, #1d3a50);
+}
+
+[data-theme="dark"] .cloudy-sky {
+  background: linear-gradient(180deg, #23282e, #3a4148);
+}
+
+[data-theme="dark"] .rainy-sky {
+  background: linear-gradient(180deg, #101c2a, #1e3a5f);
+}
+
+[data-theme="dark"] .thunderstorm-sky {
+  background: linear-gradient(180deg, #12161f, #263a5e);
+}
+
+[data-theme="dark"] .snowy-sky {
+  background: linear-gradient(180deg, #232a33, #3c4a5a);
+}
+
+[data-theme="dark"] .drizzle-sky {
+  background: linear-gradient(180deg, #1d2933, #33485a);
+}
+
+[data-theme="dark"] .misty-sky {
+  background: linear-gradient(180deg, #262d31, #3d474d);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  position: fixed;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 10;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-base);
+  background-color: var(--surface-chip);
+  color: var(--text-primary);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-1);
+}
+
+.theme-toggle:hover {
+  background-color: var(--surface);
+}
