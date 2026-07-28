@@ -13,3 +13,5 @@ size: 65871
 2026-07-28T04:08Z | it003 | E01-001..030 | 3cc3689 | CI hardening sweep (29 done, 019 obsolete) | gates:fmt,test(37),lint,build | smoke:pending-ci
 2026-07-28T04:15Z | it004 | E06-001..013 | 17e9f8b | design tokens foundation, App.css migrated | gates:fmt,test(37),lint,build | smoke:n/a
 2026-07-28T04:15Z | it005 | E21-001..008 | 3b1dbfd | tri-state dark mode, dark sky variants, no-flash | gates:fmt,test(41),lint,build | smoke:pending-ci
+2026-07-28T04:28Z | it006 | BUG-001,BUG-002 | 001f66f | artifact actions bump, footer flow fix | gates:fmt,test(41),lint,build | smoke:n/a
+2026-07-28T04:28Z | it007 | E10-001..023 | b83a62b | geocoding autocomplete combobox + favorites | gates:fmt,test(53),lint,build | smoke:pending-ci
