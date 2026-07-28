@@ -473,10 +473,9 @@ button:disabled {
 }
 
 .app-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
+  margin-top: var(--space-6);
+  border-radius: var(--radius-md);
   background-color: var(--accent);
   color: var(--accent-contrast);
   text-align: center;
